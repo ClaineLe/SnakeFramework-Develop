@@ -1,27 +1,54 @@
-using com.halo.framework.common;
-using UnityEngine;
-
 namespace com.snake.framework
 {
     namespace runtime
     {
-        using System.Reflection;
-        using tool;
+        using System.Collections.Generic;
+
         public class AppFacade : Singleton<AppFacade>, ISingleton
         {
-            public override void Initialize()
+            public LifeCycle mLifeCycle;
+            private Dictionary<string, IManager> _managerDic;
+
+            protected override void onInitialize()
             {
-                base.Initialize();
-                foreach (Assembly assembly in Utility.Assembly.GetAssemblies())
+                base.onInitialize();
+                this._managerDic = new Dictionary<string, IManager>();
+                this.mLifeCycle = LifeCycle.Create();
+            }
+
+            public void StartUp(BootDriver bootDriver)
+            {
+                bootDriver.mAppFacadeCostom.Initialization();
+                bootDriver.mAppFacadeCostom.GameLaunch();
+            }
+
+            public T RegiestManager<T>() where T : IManager, new()
+            {
+                T manager = new T();
+                if (_managerDic.ContainsKey(manager.mName) == true)
                 {
-                    if (assembly.FullName.StartsWith("Assembly-CSharp") == true)
-                    {
-                        foreach (var a in assembly.GetTypes())
-                        {
-                            Debug.Log(a);
-                        }
-                    }
+                    throw new System.Exception("管理器已经存在.MgrName:" + manager.mName);
                 }
+
+                manager.Initialization();
+                _managerDic.Add(manager.mName, manager);
+                return manager;
+            }
+
+            public T GetManager<T>()
+                where T : class, IManager
+            {
+                return GetManager(typeof(T).Name) as T;
+            }
+
+            public IManager GetManager(string mgrName)
+            {
+                IManager manager;
+                if (this._managerDic.TryGetValue(mgrName, out manager))
+                {
+                    return manager;
+                }
+                return null;
             }
         }
     }

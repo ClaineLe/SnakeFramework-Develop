@@ -4,13 +4,17 @@ namespace com.snake.framework
 {
     namespace runtime
     {
-        using tool;
-        public class BootDriver
+        public class BootDriver : MonoBehaviour
         {
-            [RuntimeInitializeOnLoadMethod]
-            static public void StartUp()
+            public IAppFacadeCostom mAppFacadeCostom { get; private set; }
+            private void Awake()
             {
-                Singleton<AppFacade>.CreateInstance();
+                mAppFacadeCostom = new AppFacadeCostom();
+            }
+
+            private void Start()
+            {
+                Singleton<AppFacade>.GetInstance().StartUp(this);
             }
         }
     }
