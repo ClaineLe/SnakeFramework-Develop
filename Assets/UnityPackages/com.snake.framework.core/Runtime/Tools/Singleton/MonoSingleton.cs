@@ -1,7 +1,7 @@
 using UnityEngine;
 namespace com.snake.framework
 {
-    namespace runtime.tool
+    namespace runtime
     {
         [AutoSingleton(true)]
         public class MonoSingleton<T> : MonoBehaviour where T : Component, ISingleton

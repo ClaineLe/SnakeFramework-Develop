@@ -1,6 +1,6 @@
 ﻿namespace com.snake.framework
 {
-    namespace runtime.tool
+    namespace runtime
     {
         public interface ISingleton
         {

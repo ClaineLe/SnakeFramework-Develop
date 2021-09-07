@@ -1,9 +1,8 @@
 using System;
 namespace com.snake.framework
 {
-    namespace runtime.tool
+    namespace runtime
     {
-
         public class Singleton<T> where T : class, ISingleton, new()
         {
             private static T s_instance;
@@ -29,7 +28,7 @@ namespace com.snake.framework
                 if (Singleton<T>.s_instance == null)
                 {
                     Singleton<T>.s_instance = Activator.CreateInstance<T>();
-                    (Singleton<T>.s_instance as Singleton<T>).Initialize();
+                    (Singleton<T>.s_instance as Singleton<T>).onInitialize();
                 }
             }
 
@@ -37,7 +36,7 @@ namespace com.snake.framework
             {
                 if (Singleton<T>.s_instance != null)
                 {
-                    (Singleton<T>.s_instance as Singleton<T>).UnInitialize();
+                    (Singleton<T>.s_instance as Singleton<T>).onUnInitialize();
                     Singleton<T>.s_instance = (T)((object)null);
                 }
             }
@@ -56,11 +55,11 @@ namespace com.snake.framework
                 return Singleton<T>.s_instance != null;
             }
 
-            public virtual void Initialize()
+            protected virtual void onInitialize()
             {
             }
 
-            public virtual void UnInitialize()
+            protected virtual void onUnInitialize()
             {
             }
         }
