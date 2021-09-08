@@ -3,8 +3,22 @@
 	"displayName":"SnakeFramework-Core",
 	"version": "0.0.3",
     "unity": "2021.1",
-    "keywords": ["snake", "framework", "core"],
+    "license": "MIT",
+    "keywords": 
+    [
+    	"snake", 
+    	"framework", 
+    	"core"
+    ],
+	"author": 
+	{
+    	"name": "ClaineLe",
+    	"email": "7941324@qq.com",
+    	"url": "https://github.com/ClaineLe/SnakeFramework"
+  	},
 	"description": "client framework",
-    "dependencies": {
-    }
+	"dependencies": {},
+ 	"publishConfig": {
+    	"registry": "https://package.openupm.com"
+  	}
 }
