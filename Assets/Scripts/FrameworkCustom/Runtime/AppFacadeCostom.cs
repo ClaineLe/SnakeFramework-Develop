@@ -1,9 +1,9 @@
 ﻿namespace com.snake.framework
 {
-    namespace runtime
+    namespace custom.runtime
     {
         using com.snake.framework.custom.manager;
-
+        using com.snake.framework.runtime;
         public class AppFacadeCostom : IAppFacadeCostom
         {
             private AppFacade _appFacade;

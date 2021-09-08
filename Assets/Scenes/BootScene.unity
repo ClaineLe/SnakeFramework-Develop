@@ -152,6 +152,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c04f83d96a9926d429f63e1c2d3fb5e7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  CustomAppFacadeClassName: AppFacadeCostom
 --- !u!4 &1886308865
 Transform:
   m_ObjectHideFlags: 0
