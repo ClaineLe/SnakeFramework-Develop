@@ -41,7 +41,6 @@ MonoBehaviour:
     - com.qfsw.mop2
     - com.deml.netcore-networking
     - com.oddworm.heapexplorer
-    - com.snake.framework
     - com.demigiant.dotween
     - com.coffee.ui-effect
     m_IsDefault: 0
@@ -67,7 +66,6 @@ MonoBehaviour:
       - com.qfsw.mop2
       - com.deml.netcore-networking
       - com.oddworm.heapexplorer
-      - com.snake.framework
       - com.demigiant.dotween
       - com.coffee.ui-effect
       m_IsDefault: 0
@@ -88,7 +86,6 @@ MonoBehaviour:
     - com.qfsw.mop2
     - com.deml.netcore-networking
     - com.oddworm.heapexplorer
-    - com.snake.framework
     - com.demigiant.dotween
     - com.coffee.ui-effect
     m_SelectedScopeIndex: 0
