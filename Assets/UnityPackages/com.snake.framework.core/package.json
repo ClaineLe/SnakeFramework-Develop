@@ -1,9 +1,9 @@
 {
-	"name": "com.snake.framework",
-	"displayName":"SnakeFramework",
+	"name": "com.snake.framework.core",
+	"displayName":"SnakeFramework-Core",
 	"version": "0.0.1",
     "unity": "2021.1",
-    "keywords": ["snake", "framework"],
+    "keywords": ["snake", "framework", "core"],
 	"description": "client framework",
     "dependencies": {
     }
