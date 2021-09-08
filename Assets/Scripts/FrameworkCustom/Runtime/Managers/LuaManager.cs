@@ -4,9 +4,9 @@ namespace com.snake.framework
 {
     namespace custom
     {
-        public class UIManager : BaseManager
+        public class LuaManager : BaseManager
         {
-
+            private LuaImplement _luaImplement;
         }
     }
 }

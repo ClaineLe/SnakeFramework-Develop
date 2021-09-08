@@ -21,9 +21,7 @@ namespace com.snake.framework
 
             private void _regCostomManagers()
             {
-                this._appFacade.RegiestManager<NetworkManager>();
-                this._appFacade.RegiestManager<ProcedureManager>();
-                this._appFacade.RegiestManager<UIManager>();
+                this._appFacade.RegiestManager<LuaManager>();
             }
 
             private void _regProcedures()

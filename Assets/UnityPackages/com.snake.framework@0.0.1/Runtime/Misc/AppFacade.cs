@@ -19,6 +19,7 @@ namespace com.snake.framework
 
             public void StartUp(BootDriver bootDriver)
             {
+                this._RegiestManager();
                 bootDriver.mAppFacadeCostom.Initialization();
                 bootDriver.mAppFacadeCostom.GameLaunch();
             }
@@ -51,6 +52,15 @@ namespace com.snake.framework
                 }
                 return null;
             }
+
+
+            private void _RegiestManager()
+            {
+                this.RegiestManager<NetworkManager>();
+                this.RegiestManager<ProcedureManager>();
+                this.RegiestManager<UIManager>();
+            }
+
         }
     }
 }

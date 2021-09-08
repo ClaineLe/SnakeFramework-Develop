@@ -1,10 +1,7 @@
-using com.snake.framework.runtime;
-
 namespace com.snake.framework
 {
-    namespace custom
+    namespace runtime
     {
-
         public interface IProcedure
         {
         }
