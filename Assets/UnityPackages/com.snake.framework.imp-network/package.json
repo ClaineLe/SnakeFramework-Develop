@@ -1,0 +1,10 @@
+{
+  "name": "com.snake.framework.imp-network",
+  "displayName":"SnakeFramework-ImpNetWork",
+  "version": "0.0.1",
+    "unity": "2021.1",
+    "keywords": ["snake", "framework", "imp", "network"],
+  "description": "client framework imp-network",
+    "dependencies": {
+    }
+}
