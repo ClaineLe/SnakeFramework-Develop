@@ -16,10 +16,7 @@
             }
             public virtual string mName => this.GetType().Name;
 
-            public virtual void Initialization()
-            {
-
-            }
+            async public virtual void Initialization() { }
         }
     }
 }

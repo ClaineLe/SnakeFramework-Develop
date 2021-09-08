@@ -14,11 +14,6 @@ namespace com.snake.framework
                 this._regProcedures();
             }
 
-            public void GameLaunch()
-            {
-                Singleton<AppFacade>.GetInstance().GetManager<ProcedureManager>().SwitchProcedure<SplashProcedure>();
-            }
-
             private void _regCostomManagers()
             {
                 this._appFacade.RegiestManager<LuaManager>();
@@ -30,7 +25,10 @@ namespace com.snake.framework
                 procedureMgr.RegiestProcedure<SplashProcedure>();
             }
 
-
+            public void GameLaunch()
+            {
+                Singleton<AppFacade>.GetInstance().GetManager<ProcedureManager>().SwitchProcedure<SplashProcedure>();
+            }
         }
     }
 }

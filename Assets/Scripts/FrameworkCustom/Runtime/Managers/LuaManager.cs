@@ -6,7 +6,7 @@ namespace com.snake.framework
     {
         public class LuaManager : BaseManager
         {
-            private LuaImplement _luaImplement;
+            //private LuaImplement _luaImplement;
         }
     }
 }
