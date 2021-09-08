@@ -1,11 +1,10 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-namespace com.halo.framework
+namespace com.snake.framework
+
 {
-    namespace common
-    {
-          public static partial class Utility
+    public static partial class Utility
           {
             /// <summary>
             /// lua访问C#  mono的实用函数
@@ -18,8 +17,7 @@ namespace com.halo.framework
                }
             
             }
-
-          }
+         
     }
 
 }

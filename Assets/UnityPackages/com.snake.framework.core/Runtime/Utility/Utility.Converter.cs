@@ -1,11 +1,10 @@
 ﻿using System;
 using System.Text;
 
-namespace com.halo.framework
+namespace com.snake.framework
+
 {
-    namespace common
-    {
-        public static partial class Utility
+    public static partial class Utility
         {
             /// <summary>
             /// 类型转换相关的实用函数。
@@ -839,6 +838,5 @@ namespace com.halo.framework
                     return encoding.GetString(value, startIndex, length);
                 }
             }
-        }
-    }
+        } 
 }

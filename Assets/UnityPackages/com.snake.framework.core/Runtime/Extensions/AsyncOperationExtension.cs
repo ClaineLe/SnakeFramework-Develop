@@ -2,11 +2,10 @@
 using System.Threading.Tasks;
 using UnityEngine;
 
-namespace com.halo.framework
+namespace com.snake.framework
+
 {
-    namespace common
-    {
-        static public class AsyncOperationExtension
+    static public class AsyncOperationExtension
         {
             /// <summary>
             /// 获取异步等待器
@@ -19,6 +18,5 @@ namespace com.halo.framework
                 asyncOp.completed += obj => { tcs.SetResult(null); };
                 return ((Task)tcs.Task).GetAwaiter();
             }
-        }
-    }
+        } 
 }

@@ -2,11 +2,10 @@
 using UnityEngine;
 
 
-namespace com.halo.framework
+namespace com.snake.framework
+
 {
-    namespace common
-    {
-        public static partial class Utility
+    public static partial class Utility
         {
             
 
@@ -52,5 +51,4 @@ namespace com.halo.framework
                 }
             }
         }
-    }
-}
+    } 

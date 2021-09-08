@@ -1,12 +1,10 @@
 ﻿using System;
 using System.IO;
 using Newtonsoft.Json;
+namespace com.snake.framework
 
-namespace com.halo.framework
 {
-    namespace common
-    {
-        public static partial class Utility
+    public static partial class Utility
         {
             public class Json
             {
@@ -53,7 +51,6 @@ namespace com.halo.framework
                     target = FromJson<T>(json);
                     return true;
                 }
-            }
-        }
+            } 
     }
 }

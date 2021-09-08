@@ -1,17 +1,19 @@
 ﻿using UnityEngine;
-
-static public class ObjectExtensions
+namespace com.snake.framework
 {
-    static bool IsNull(this Object obj)
+    static public class ObjectExtensions
     {
-        return obj == null || obj.Equals(null);
-    }
+        static bool IsNull(this Object obj)
+        {
+            return obj == null || obj.Equals(null);
+        }
 
-    public static Object Clone(this Object target, Transform parent)
-    {
-        Object gameobject = GameObject.Instantiate(target, parent);
-        gameobject.name = gameobject.name.Replace("(Clone)", string.Empty);
-        return gameobject;
-    }
+        public static Object Clone(this Object target, Transform parent)
+        {
+            Object gameobject = GameObject.Instantiate(target, parent);
+            gameobject.name = gameobject.name.Replace("(Clone)", string.Empty);
+            return gameobject;
+        }
 
+    }
 }

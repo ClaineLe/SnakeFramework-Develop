@@ -1,50 +1,52 @@
 ﻿using System;
 using UnityEngine;
 using UnityEngine.UI;
-
-static public class GraphicExtensions
+namespace com.snake.framework
 {
-    static public void SetGrey(this Graphic targetGraphic, bool gray = true, bool isInChild = false)
+    static public class GraphicExtensions
     {
-        if (gray)
+        static public void SetGrey(this Graphic targetGraphic, bool gray = true, bool isInChild = false)
         {
-            targetGraphic.material = Resources.Load<Material>("UIGreyMaterial");
-            if (isInChild) 
+            if (gray)
             {
-                Image[] _imgs = targetGraphic.gameObject.GetComponentsInChildren<Image>();
-                Text[] _texts = targetGraphic.gameObject.GetComponentsInChildren<Text>();
-                for (int i = 0; i < _imgs.Length; i++)
+                targetGraphic.material = Resources.Load<Material>("UIGreyMaterial");
+                if (isInChild)
                 {
-                    if (_imgs[i] != targetGraphic)
-                        _imgs[i].SetGrey(gray, isInChild);
-                }
+                    Image[] _imgs = targetGraphic.gameObject.GetComponentsInChildren<Image>();
+                    Text[] _texts = targetGraphic.gameObject.GetComponentsInChildren<Text>();
+                    for (int i = 0; i < _imgs.Length; i++)
+                    {
+                        if (_imgs[i] != targetGraphic)
+                            _imgs[i].SetGrey(gray, isInChild);
+                    }
 
-                for (int i = 0; i < _texts.Length; i++)
-                {
-                    if (_texts[i] != targetGraphic)
-                        _texts[i].SetGrey(gray, isInChild);
+                    for (int i = 0; i < _texts.Length; i++)
+                    {
+                        if (_texts[i] != targetGraphic)
+                            _texts[i].SetGrey(gray, isInChild);
+                    }
                 }
             }
-        }
-        else
-        {
-
-            //targetGraphic.material = null;
-            targetGraphic.material = Resources.Load<Material>("UIDefaultMaterial");
-            if (isInChild)
+            else
             {
-                Image[] _imgs = targetGraphic.gameObject.GetComponentsInChildren<Image>();
-                Text[] _texts = targetGraphic.gameObject.GetComponentsInChildren<Text>();
-                for (int i = 0; i < _imgs.Length; i++)
-                {
-                    if (_imgs[i] != targetGraphic)
-                        _imgs[i].SetGrey(gray, isInChild);
-                }
 
-                for (int i = 0; i < _texts.Length; i++)
+                //targetGraphic.material = null;
+                targetGraphic.material = Resources.Load<Material>("UIDefaultMaterial");
+                if (isInChild)
                 {
-                    if (_texts[i] != targetGraphic)
-                        _texts[i].SetGrey(gray, isInChild);
+                    Image[] _imgs = targetGraphic.gameObject.GetComponentsInChildren<Image>();
+                    Text[] _texts = targetGraphic.gameObject.GetComponentsInChildren<Text>();
+                    for (int i = 0; i < _imgs.Length; i++)
+                    {
+                        if (_imgs[i] != targetGraphic)
+                            _imgs[i].SetGrey(gray, isInChild);
+                    }
+
+                    for (int i = 0; i < _texts.Length; i++)
+                    {
+                        if (_texts[i] != targetGraphic)
+                            _texts[i].SetGrey(gray, isInChild);
+                    }
                 }
             }
         }

@@ -1,10 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace com.halo.framework
+namespace com.snake.framework
 {
-    namespace common
-    {
         public static partial class Utility
         {
             /// <summary>
@@ -99,7 +97,6 @@ namespace com.halo.framework
 
                     return null;
                 }
-            }
         }
     }
 }

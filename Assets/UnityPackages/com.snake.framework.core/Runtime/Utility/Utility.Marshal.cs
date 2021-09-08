@@ -1,10 +1,9 @@
 ﻿using System;
 
-namespace com.halo.framework
+namespace com.snake.framework
+
 {
-    namespace common
-    {
-        public static partial class Utility
+    public static partial class Utility
         {
             /// <summary>
             /// Marshal 相关的实用函数。
@@ -243,6 +242,5 @@ namespace com.halo.framework
                     return (T)System.Runtime.InteropServices.Marshal.PtrToStructure(s_CachedHGlobalPtr, typeof(T));
                 }
             }
-        }
-    }
+        } 
 }

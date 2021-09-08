@@ -1,12 +1,15 @@
-﻿public static class StringExtension
+﻿namespace com.snake.framework
 {
-    /// <summary>
-    /// 修复斜杠
-    /// </summary>
-    /// <param name="str"></param>
-    /// <returns></returns>
-    public static string FixSlash(this string str)
+    public static class StringExtension
     {
-        return str.Replace("\\", "/");
+        /// <summary>
+        /// 修复斜杠
+        /// </summary>
+        /// <param name="str"></param>
+        /// <returns></returns>
+        public static string FixSlash(this string str)
+        {
+            return str.Replace("\\", "/");
+        }
     }
 }

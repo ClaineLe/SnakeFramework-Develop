@@ -2,11 +2,10 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace com.halo.framework
+namespace com.snake.framework
+
 {
-    namespace common
-    {
-        public static partial class Utility
+    public static partial class Utility
         {
             /// <summary>
             /// 字符相关的实用函数。
@@ -154,5 +153,4 @@ namespace com.halo.framework
                 }
             }
         }
-    }
-}
+    } 

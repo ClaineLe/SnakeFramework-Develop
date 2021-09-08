@@ -3,11 +3,10 @@ using System.Text;
 using System.IO;
 using System.Security.Cryptography;
 
-namespace com.halo.framework
+namespace com.snake.framework
+
 {
-    namespace common
-    {
-        public static partial class Utility
+    public static partial class Utility
         {
             /// <summary>
             /// 获取文件的MD5码
@@ -61,6 +60,5 @@ namespace com.halo.framework
                 if (bit == 32) return tmp.ToString();//默认情况
                 else return string.Empty;
             }
-        }
-    }
+        } 
 }
