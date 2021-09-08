@@ -1,10 +1,25 @@
 {
-  "name": "com.snake.framework.imp-network",
-  "displayName":"SnakeFramework-ImpNetWork",
-  "version": "0.0.1",
+	"name": "com.snake.framework.imp-network",
+  	"displayName":"SnakeFramework-ImpNetWork",
+	"version": "0.0.4",
     "unity": "2021.1",
-    "keywords": ["snake", "framework", "imp", "network"],
-  "description": "client framework imp-network",
-    "dependencies": {
-    }
+    "license": "MIT",
+    "keywords": 
+    [
+    	"snake", 
+    	"framework",
+    	"imp",
+    	"network",
+    ],
+	"author": 
+	{
+    	"name": "ClaineLe",
+    	"email": "7941324@qq.com",
+    	"url": "https://github.com/ClaineLe/SnakeFramework"
+  	},
+	"description": "client framework",
+	"dependencies": {},
+ 	"publishConfig": {
+    	"registry": "https://package.openupm.com"
+  	}
 }
