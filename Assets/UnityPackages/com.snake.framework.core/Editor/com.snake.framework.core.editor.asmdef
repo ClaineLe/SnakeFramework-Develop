@@ -1,0 +1,16 @@
+{
+    "name": "com.snake.framework.core.editor",
+    "rootNamespace": "",
+    "references": [
+        "GUID:e488099657045a54495022ab0faec569"
+    ],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}
