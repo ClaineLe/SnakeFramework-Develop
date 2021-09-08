@@ -1,9 +1,10 @@
+using com.snake.framework.runtime;
+using System.Collections.Generic;
+
 namespace com.snake.framework
 {
     namespace runtime
     {
-        using System.Collections.Generic;
-
         public class AppFacade : Singleton<AppFacade>, ISingleton
         {
             public LifeCycle mLifeCycle;

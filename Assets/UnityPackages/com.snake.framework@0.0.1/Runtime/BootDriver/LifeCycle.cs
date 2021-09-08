@@ -1,6 +1,5 @@
 using UnityEngine;
 
-
 namespace com.snake.framework
 {
     namespace runtime

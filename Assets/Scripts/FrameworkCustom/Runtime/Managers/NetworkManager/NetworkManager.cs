@@ -3,7 +3,7 @@ using com.snake.framework.runtime;
 
 namespace com.snake.framework 
 {
-    namespace custom.manager
+    namespace custom
     {
         public class NetworkManager : BaseManager
         {

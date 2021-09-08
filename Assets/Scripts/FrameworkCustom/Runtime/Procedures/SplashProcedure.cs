@@ -1,5 +1,4 @@
-
-using com.snake.framework.custom.manager;
+using com.snake.framework.custom;
 
 namespace com.snake.framework
 {

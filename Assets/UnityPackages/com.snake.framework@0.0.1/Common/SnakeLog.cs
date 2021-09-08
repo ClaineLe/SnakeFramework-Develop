@@ -1,5 +1,3 @@
- 
-
 namespace com.snake.framework
 {
     /// <summary>
