@@ -4,7 +4,6 @@ using System.IO;
 using System.Security.Cryptography;
 
 namespace com.snake.framework
-
 {
     public static partial class Utility
         {

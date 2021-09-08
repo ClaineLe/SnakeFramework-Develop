@@ -4,7 +4,6 @@ using System.Threading.Tasks;
 using UnityEngine.Networking;
 
 namespace com.snake.framework
-
 {
     public static partial class Utility
     {

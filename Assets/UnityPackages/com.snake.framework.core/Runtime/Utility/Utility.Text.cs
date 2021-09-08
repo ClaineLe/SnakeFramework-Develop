@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Text;
 
 namespace com.snake.framework
-
 {
     public static partial class Utility
         {

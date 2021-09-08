@@ -1,38 +1,31 @@
-﻿using System.Collections;
-using UnityEngine;
-
-
-namespace com.snake.framework
-
+﻿namespace com.snake.framework
 {
     public static partial class Utility
+    {
+        public class Platform
         {
-            
+            public const string Android = "Android";
+            public const string iOS = "iOS";
+            public const string Windows = "Windows";
+            public const string OSX = "OSX";
 
-            public class Platform
+            public static string GetPlatformName()
             {
-                public const string Android = "Android";
-                public const string iOS = "iOS";
-                public const string Windows = "Windows";
-                public const string OSX = "OSX";
-
-                public static string GetPlatformName()
-                {
 #if UNITY_EDITOR
-                    switch (UnityEditor.EditorUserBuildSettings.activeBuildTarget)
-                    {
-                        case UnityEditor.BuildTarget.Android:
-                            return Android;
-                        case UnityEditor.BuildTarget.iOS:
-                            return iOS;
-                        case UnityEditor.BuildTarget.StandaloneWindows:
-                        case UnityEditor.BuildTarget.StandaloneWindows64:
-                            return Windows;
-                        case UnityEditor.BuildTarget.StandaloneOSX:
-                            return OSX;
-                        default:
-                            return null;
-                    }
+                switch (UnityEditor.EditorUserBuildSettings.activeBuildTarget)
+                {
+                    case UnityEditor.BuildTarget.Android:
+                        return Android;
+                    case UnityEditor.BuildTarget.iOS:
+                        return iOS;
+                    case UnityEditor.BuildTarget.StandaloneWindows:
+                    case UnityEditor.BuildTarget.StandaloneWindows64:
+                        return Windows;
+                    case UnityEditor.BuildTarget.StandaloneOSX:
+                        return OSX;
+                    default:
+                        return null;
+                }
 #else
               switch (Application.platform)
                 {
@@ -48,7 +41,7 @@ namespace com.snake.framework
                         return null;
                 }
 #endif
-                }
             }
         }
-    } 
+    }
+}

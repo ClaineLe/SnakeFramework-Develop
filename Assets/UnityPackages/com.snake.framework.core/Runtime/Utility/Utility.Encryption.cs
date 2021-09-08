@@ -4,7 +4,6 @@ using System.Text;
 using UnityEngine;
 
 namespace com.snake.framework
-
 {
     public static partial class Utility
     {

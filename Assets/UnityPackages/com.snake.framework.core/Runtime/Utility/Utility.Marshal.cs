@@ -1,7 +1,6 @@
 ﻿using System;
 
 namespace com.snake.framework
-
 {
     public static partial class Utility
         {

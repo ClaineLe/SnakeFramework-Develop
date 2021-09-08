@@ -17,26 +17,5 @@ namespace com.snake.framework
 
             rectTransform.localScale = Vector3.one;
         }
-
-        static public void SetAnchoredPosition(this RectTransform rectTransform, Vector2 anchoredPos)
-        {
-            rectTransform.anchoredPosition = anchoredPos;
-        }
-
-        static public void SetAnchoredPosition(this RectTransform rectTransform, float x, float y)
-        {
-            rectTransform.anchoredPosition = new Vector2(x, y);
-        }
-
-        static public void SetAnchoredPositionX(this RectTransform rectTransform, float x)
-        {
-            rectTransform.anchoredPosition = new Vector2(x, rectTransform.anchoredPosition.y);
-        }
-
-        static public void SetAnchoredPositionY(this RectTransform rectTransform, float y)
-        {
-            rectTransform.anchoredPosition = new Vector2(rectTransform.anchoredPosition.x, y);
-        }
-
     }
 }
