@@ -134,7 +134,7 @@ namespace com.snake.framework
             static private void _WritePackageJson(string jsonPath, JObject upmObject)
             {
                 string json = JsonConvert.SerializeObject(upmObject, Formatting.Indented);
-                System.IO.File.WriteAllText(jsonPath, json, System.Text.Encoding.UTF8);
+                System.IO.File.WriteAllText(jsonPath, json, System.Text.Encoding.Default);
             }
 
         }
