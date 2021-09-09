@@ -27,24 +27,12 @@ namespace com.snake.framework
                     return;
                 }
 
-                foreach (var a in foldInfo.GetFileSystemInfos("*", System.IO.SearchOption.AllDirectories))
+                Utility.Fold.ClearFold(repositoriePath, new string[]
                 {
-                    if (a.FullName.Contains("\\.git"))
-                        continue;
-                    if (a.Exists == false)
-                        continue;
-                    FileUtil.DeleteFileOrDirectory(a.FullName.FixSlash());
-                }
+                    "\\.git",
+                });
 
-                FileUtil.CopyFileOrDirectory(fullPath + "/Common", repositoriePath + "/Common");
-                FileUtil.CopyFileOrDirectory(fullPath + "/Editor", repositoriePath + "/Editor");
-                FileUtil.CopyFileOrDirectory(fullPath + "/Runtime", repositoriePath + "/Runtime");
-                foreach (var a in System.IO.Directory.GetFiles(fullPath, "*", System.IO.SearchOption.TopDirectoryOnly))
-                {
-                    string fileName = System.IO.Path.GetFileName(a);
-                    FileUtil.CopyFileOrDirectory(fullPath + "/" + fileName, repositoriePath + "/" + fileName);
-                }
-
+                Utility.Fold.CopyFold(fullPath, repositoriePath);
             }
 
             [MenuItem("SnakeTools/Í¬²½UPM/com.snake.framework.imp-network")]
@@ -61,22 +49,12 @@ namespace com.snake.framework
                     return;
                 }
 
-                foreach (var a in foldInfo.GetFileSystemInfos("*", System.IO.SearchOption.AllDirectories))
+                Utility.Fold.ClearFold(repositoriePath, new string[]
                 {
-                    if (a.FullName.Contains("\\.git"))
-                        continue;
-                    if (a.Exists == false)
-                        continue;
-                    FileUtil.DeleteFileOrDirectory(a.FullName.FixSlash());
-                }
+                    "\\.git",
+                });
 
-                FileUtil.CopyFileOrDirectory(fullPath + "/Runtime", repositoriePath + "/Runtime");
-                FileUtil.CopyFileOrDirectory(fullPath + "/Sample", repositoriePath + "/Sample");
-                foreach (var a in System.IO.Directory.GetFiles(fullPath, "*", System.IO.SearchOption.TopDirectoryOnly))
-                {
-                    string fileName = System.IO.Path.GetFileName(a);
-                    FileUtil.CopyFileOrDirectory(fullPath + "/" + fileName, repositoriePath + "/" + fileName);
-                }
+                Utility.Fold.CopyFold(fullPath, repositoriePath );
 
             }
 
@@ -94,18 +72,15 @@ namespace com.snake.framework
                     return;
                 }
 
-                System.IO.Directory.Delete(repositoriePath + "/Runtime", true);
-                System.IO.Directory.Delete(repositoriePath + "/Sample", true);
-                foreach (var a in foldInfo.GetFiles("*", System.IO.SearchOption.TopDirectoryOnly))
-                    a.Delete();
-
-                FileUtil.CopyFileOrDirectory(fullPath + "/Runtime", repositoriePath + "/Runtime");
-                FileUtil.CopyFileOrDirectory(fullPath + "/Sample", repositoriePath + "/Sample");
-                foreach (var a in System.IO.Directory.GetFiles(fullPath, "*", System.IO.SearchOption.TopDirectoryOnly))
+                Utility.Fold.ClearFold(repositoriePath, new string[]
                 {
-                    string fileName = System.IO.Path.GetFileName(a);
-                    FileUtil.CopyFileOrDirectory(fullPath + "/" + fileName, repositoriePath + "/" + fileName);
-                }
+                    "\\.git","\\Plugins","\\XLua",
+                });
+
+                Utility.Fold.CopyFold(fullPath, repositoriePath, new string[]
+                {
+                    "\\Plugins","\\XLua",
+                });
             }
 
             static private System.Version _TickVersion(string upPath, int major, int minor, int build, bool autoSave = true)
@@ -123,7 +98,6 @@ namespace com.snake.framework
                     _WritePackageJson(jsonPath, upmObject);
                 return newVersion;
             }
-
 
             static private JObject _ReadPackageJson(string jsonPath)
             {
