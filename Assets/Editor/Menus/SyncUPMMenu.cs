@@ -56,6 +56,16 @@ namespace com.snake.framework
                 _SyncSnakeFramework_ImpXLua(false);
             }
 
+
+            [MenuItem("SnakeTools/Í¬²½UPM/com.snake.framework.fork-fairygui")]
+            static public void SyncSnakeFramework_ForkFairyGUI_Release()
+            {
+                string unityPackageName = "com.snake.framework.fork-fairygui";
+                string repositoriePath = "../SnakeFramework_ForkFairyGUI/";
+                _CopyToGitRepo(unityPackageName, repositoriePath, new[] { "\\.git", }, null, true);
+
+            }
+
             static private void _SyncSnakeFramework_Core(bool debug)
             {
                 string unityPackageName = "com.snake.framework.core";

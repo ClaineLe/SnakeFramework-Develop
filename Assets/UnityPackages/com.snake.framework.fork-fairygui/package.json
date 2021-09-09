@@ -1,0 +1,24 @@
+{
+  "name": "com.snake.framework.fork-fairygui",
+  "displayName": "SnakeFramework-ForkFairyGUI",
+  "version": "4.2.1",
+  "unity": "2018.4",
+  "license": "MIT",
+  "keywords": [
+    "snake",
+    "framework",
+    "fork",
+    "fgui",
+    "fairygui"
+  ],
+  "author": {
+    "name": "FairyGUI",
+    "email": "support@fairygui.com",
+    "url": "https://www.fairygui.com/"
+  },
+  "description": "FairyGUI is a Cross Platform UI Editor & UI framework",
+  "dependencies": {},
+  "publishConfig": {
+    "registry": "https://package.openupm.com"
+  }
+}
