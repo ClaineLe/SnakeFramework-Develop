@@ -1,3 +1,0 @@
-git subtree split --prefix=Assets/UnityPackages/com.snake.framework.core --branch upm/com.snake.framework.core/0.0.4
-git subtree split --prefix=Assets/UnityPackages/com.snake.framework.imp-network --branch upm/com.snake.framework.imp-network/0.0.7
-git subtree split --prefix=Assets/UnityPackages/com.snake.framework.imp-xlua --branch upm/com.snake.framework.imp-xlua/0.0.8
