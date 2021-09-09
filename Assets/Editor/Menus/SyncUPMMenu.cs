@@ -19,7 +19,7 @@ namespace com.snake.framework
                 string unityPackageName = "com.snake.framework.core";
                 string repositoriePath = "../SnakeFramework-Core/";
                 string fullPath = UPM_PATH_ROOT + "/" + unityPackageName;
-                _TickVersion(fullPath, 0, 0, 0, 1);
+                _TickVersion(fullPath, 0, 0, 1);
                 System.IO.DirectoryInfo foldInfo = new System.IO.DirectoryInfo(repositoriePath);
                 if (foldInfo.Exists == false)
                 {
@@ -53,7 +53,7 @@ namespace com.snake.framework
                 string unityPackageName = "com.snake.framework.imp-network";
                 string repositoriePath = "../SnakeFramework-ImpNetWork/";
                 string fullPath = UPM_PATH_ROOT + "/" + unityPackageName;
-                _TickVersion(fullPath, 0, 0, 0, 1);
+                _TickVersion(fullPath, 0, 0, 1);
                 System.IO.DirectoryInfo foldInfo = new System.IO.DirectoryInfo(repositoriePath);
                 if (foldInfo.Exists == false)
                 {
@@ -86,7 +86,7 @@ namespace com.snake.framework
                 string unityPackageName = "com.snake.framework.imp-xlua";
                 string repositoriePath = "../SnakeFramework-ImpXLua/";
                 string fullPath = UPM_PATH_ROOT + "/" + unityPackageName;
-                _TickVersion(fullPath, 0, 0, 0, 1);
+                _TickVersion(fullPath, 0, 0, 1);
                 System.IO.DirectoryInfo foldInfo = new System.IO.DirectoryInfo(repositoriePath);
                 if (foldInfo.Exists == false)
                 {
@@ -108,7 +108,7 @@ namespace com.snake.framework
                 }
             }
 
-            static private System.Version _TickVersion(string upPath, int major, int minor, int build, int revision, bool autoSave = true)
+            static private System.Version _TickVersion(string upPath, int major, int minor, int build, bool autoSave = true)
             {
                 string key = "version";
                 string jsonPath = upPath + "/package.json";
@@ -117,8 +117,7 @@ namespace com.snake.framework
                 System.Version newVersion = new System.Version(
                     oldVersion.Major + major,
                     oldVersion.Minor + minor,
-                    oldVersion.Build + build,
-                    oldVersion.Revision + revision);
+                    oldVersion.Build + build);
                 upmObject[key] = newVersion.ToString();
                 if (autoSave)
                     _WritePackageJson(jsonPath, upmObject);
