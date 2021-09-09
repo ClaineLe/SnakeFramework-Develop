@@ -13,6 +13,14 @@ namespace com.snake.framework
         {
             private const string UPM_PATH_ROOT = "Assets/UnityPackages";
 
+            [MenuItem("SnakeTools/Í¬²½Using")]
+            static public void SyncSnakeFramework_Using()
+            {
+                string repositoriePath = "../SnakeFramework-Using/Assets/";
+                Utility.Fold.ClearFold(repositoriePath, null);
+                Utility.Fold.CopyFold("Assets", repositoriePath, new[] { "UnityPackages" });
+            }
+
             [MenuItem("SnakeTools/µ÷ÊÔUPM/com.snake.framework.core")]
             static public void SyncSnakeFramework_Core_Debug()
             {
