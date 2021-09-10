@@ -15,8 +15,10 @@ namespace com.snake.framework
         }
         protected override void onTick(ProcedureManager owner, int frameCount, float time, float deltaTime, float unscaledTime, float realElapseSeconds)
         {
-            SnakeLog.Info("SplashProcedure.onTick:" + frameCount);
-            Singleton<AppFacade>.GetInstance().GetManager<ProcedureManager>().SwitchProcedure<PreloadProcedure>();
+            //float initProgress = owner.mAppFacade.GetInitProgress();
+            //SnakeLog.Info("SplashProcedure.onTick:" + initProgress);
+            //if (initProgress >= 1.0f)
+            //    Singleton<AppFacade>.GetInstance().GetManager<ProcedureManager>().SwitchProcedure<PreloadProcedure>();
         }
 
         protected override void onExit(ProcedureManager owner, IState<ProcedureManager> toState)

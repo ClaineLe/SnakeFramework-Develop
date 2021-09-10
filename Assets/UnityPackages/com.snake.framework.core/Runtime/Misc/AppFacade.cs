@@ -53,14 +53,29 @@ namespace com.snake.framework
                 return null;
             }
 
-
             private void _RegiestManager()
             {
-                this.RegiestManager<NetworkManager>();
+                this.RegiestManager<AssetManager>();
                 this.RegiestManager<ProcedureManager>();
+                this.RegiestManager<NetworkManager>();
                 this.RegiestManager<UIManager>();
             }
 
+            /*
+            public float GetInitProgress() 
+            {
+                float count = this._managerDic.Count;
+                float progress = 0.0f;
+                Dictionary<string, IManager>.Enumerator enumerator = this._managerDic.GetEnumerator();
+                while (enumerator.MoveNext())
+                {
+                    progress += enumerator.Current.Value.mInitProgress;
+                }
+                if (count == progress)
+                    return 1.0f;
+                return progress / count;
+            }
+            */
         }
     }
 }
