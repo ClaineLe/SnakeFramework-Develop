@@ -1,0 +1,16 @@
+{
+    "name": "com.snake.framework.fork-fairygui.editor",
+    "rootNamespace": "",
+    "references": [
+        "GUID:ff6398bb00191c842ade4fd16d789cf5"
+    ],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}
