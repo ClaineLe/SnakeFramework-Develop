@@ -16,7 +16,8 @@
             }
             public virtual string mName => this.GetType().Name;
 
-            async public virtual void Initialization() { }
+            public bool mIsInitCompleted { get; protected set; } = false;
+            public virtual void Initialization() { }
         }
     }
 }

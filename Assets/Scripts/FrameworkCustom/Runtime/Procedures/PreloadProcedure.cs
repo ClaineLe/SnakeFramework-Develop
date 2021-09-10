@@ -5,24 +5,24 @@ namespace com.snake.framework
     /// <summary>
     /// ÉÁÆÁÁ÷³Ì
     /// </summary>
-    public class SplashProcedure : BaseProcedure
+    public class PreloadProcedure : BaseProcedure
     {
         protected override void onEnter(ProcedureManager owner, IState<ProcedureManager> fromState, object userData)
         {
             base.onEnter(owner, fromState, userData);
-            SnakeLog.Info("SplashProcedure.onEnter");
-
+            SnakeLog.Info("PreloadProcedure.onEnter");
         }
+
         protected override void onTick(ProcedureManager owner, int frameCount, float time, float deltaTime, float unscaledTime, float realElapseSeconds)
         {
-            SnakeLog.Info("SplashProcedure.onTick:" + frameCount);
-            Singleton<AppFacade>.GetInstance().GetManager<ProcedureManager>().SwitchProcedure<PreloadProcedure>();
+            SnakeLog.Info("PreloadProcedure.onTick:" + frameCount);
+            Singleton<AppFacade>.GetInstance().GetManager<ProcedureManager>().SwitchProcedure<PlayingProcedure>();
         }
 
         protected override void onExit(ProcedureManager owner, IState<ProcedureManager> toState)
         {
             base.onExit(owner, toState);
-            SnakeLog.Info("SplashProcedure.onExit");
+            SnakeLog.Info("PreloadProcedure.onExit");
         }
     }
 }

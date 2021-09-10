@@ -2,20 +2,6 @@ namespace com.snake.framework
 {
     namespace runtime
     {
-        public interface IProcedure
-        {
-        }
-        public abstract class BaseProcedure : BaseState<ProcedureManager>, IProcedure
-        {
-            public virtual string mName
-            {
-                get
-                {
-                    return this.GetType().Name;
-                }
-            }
-        }
-
         public class ProcedureManager : BaseManager, IFiniteStateMachineOwner
         {
             private IFiniteStateMachine<ProcedureManager> _procedureFsm;
@@ -24,15 +10,6 @@ namespace com.snake.framework
             {
                 this._procedureFsm = new FiniteStateMachine<ProcedureManager>(this);
                 LifeCycle.mUpdateHandle.AddEventHandler(this._procedureFsm.Tick);
-                /*
-                this.RegiestProcedure<StartPreloadProcedure>();
-                this.RegiestProcedure<PreloadProcedure>();
-                this.RegiestProcedure<InitUpdateProcedure>();
-                this.RegiestProcedure<UpdateProcessProcedure>();
-                this.RegiestProcedure<SplashProcedure>();
-                this.RegiestProcedure<LuaRuntimeProcedure>();
-                 */
-
             }
 
 
@@ -57,7 +34,6 @@ namespace com.snake.framework
                     SnakeLog.ErrorFormat("切换流程失败。不存在流程:{0}", procedureName);
                     return false;
                 }
-                SnakeLog.InfoFormat(string.Format("切换流程:{0}", procedureName));
                 return this._procedureFsm.Switch(procedureName, userData);
             }
             public bool CanSwitch()

@@ -23,6 +23,8 @@ namespace com.snake.framework
             {
                 ProcedureManager procedureMgr = Singleton<AppFacade>.GetInstance().GetManager<ProcedureManager>();
                 procedureMgr.RegiestProcedure<SplashProcedure>();
+                procedureMgr.RegiestProcedure<PreloadProcedure>();
+                procedureMgr.RegiestProcedure<PlayingProcedure>();
             }
 
             public void GameLaunch()
