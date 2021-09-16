@@ -8,12 +8,12 @@ namespace com.snake.framework
         public class AppFacade : Singleton<AppFacade>, ISingleton
         {
             public LifeCycle mLifeCycle;
-            private Dictionary<string, IManager> _managerDic;
+            private Dictionary<string, System.Tuple<System.Type, IManager>> _managerDic;
 
             protected override void onInitialize()
             {
                 base.onInitialize();
-                this._managerDic = new Dictionary<string, IManager>();
+                this._managerDic = new Dictionary<string, System.Tuple<System.Type, IManager>>();
                 this.mLifeCycle = LifeCycle.Create();
             }
 
@@ -24,17 +24,14 @@ namespace com.snake.framework
                 bootDriver.mAppFacadeCostom.GameLaunch();
             }
 
-            public T RegiestManager<T>() where T : IManager, new()
+            public void RegiestManager<T>(bool replace = false) where T : IManager
             {
-                T manager = new T();
-                if (_managerDic.ContainsKey(manager.mName) == true)
+                string typeName = typeof(T).Name;
+                if (replace == false && _managerDic.ContainsKey(typeName) == true)
                 {
-                    throw new System.Exception("管理器已经存在.MgrName:" + manager.mName);
+                    throw new System.Exception("管理器已经存在.MgrName:" + typeName);
                 }
-
-                manager.Initialization();
-                _managerDic.Add(manager.mName, manager);
-                return manager;
+                _managerDic[typeName] = new System.Tuple<System.Type, IManager>(typeof(T), null);
             }
 
             public T GetManager<T>()
@@ -45,10 +42,9 @@ namespace com.snake.framework
 
             public IManager GetManager(string mgrName)
             {
-                IManager manager;
-                if (this._managerDic.TryGetValue(mgrName, out manager))
+                if (this._managerDic.TryGetValue(mgrName, out System.Tuple<System.Type, IManager>  managerKVP))
                 {
-                    return manager;
+                    return managerKVP.Item2;
                 }
                 return null;
             }
@@ -61,21 +57,23 @@ namespace com.snake.framework
                 this.RegiestManager<UIManager>();
             }
 
-            /*
+            public void BootUpManagers() 
+            {
+
+            }
+
             public float GetInitProgress() 
             {
                 float count = this._managerDic.Count;
                 float progress = 0.0f;
-                Dictionary<string, IManager>.Enumerator enumerator = this._managerDic.GetEnumerator();
+                float initCompletedCount = 0.0f;
+                var enumerator = this._managerDic.GetEnumerator();
                 while (enumerator.MoveNext())
-                {
-                    progress += enumerator.Current.Value.mInitProgress;
-                }
+                    progress += enumerator.Current.Value.Item2.mBootUpProgress;
                 if (count == progress)
                     return 1.0f;
                 return progress / count;
             }
-            */
         }
     }
 }

@@ -22,6 +22,7 @@ namespace com.snake.framework
             private void _regProcedures()
             {
                 ProcedureManager procedureMgr = Singleton<AppFacade>.GetInstance().GetManager<ProcedureManager>();
+                procedureMgr.RegiestProcedure<BootUpProcedure>();
                 procedureMgr.RegiestProcedure<SplashProcedure>();
                 procedureMgr.RegiestProcedure<PreloadProcedure>();
                 procedureMgr.RegiestProcedure<PlayingProcedure>();

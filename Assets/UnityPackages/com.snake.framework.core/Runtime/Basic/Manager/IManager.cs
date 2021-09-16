@@ -5,7 +5,9 @@ namespace com.snake.framework
         public interface IManager
         {
             string mName { get; }
+            float mBootUpProgress { get; }
             void Initialization();
+
         }
     }
 }
