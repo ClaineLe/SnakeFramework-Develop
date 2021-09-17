@@ -6,14 +6,13 @@ namespace com.snake.framework
         {
             private IFiniteStateMachine<ProcedureManager> _procedureFsm;
 
-            public override void Initialization()
+            public ProcedureManager() 
             {
                 this._procedureFsm = new FiniteStateMachine<ProcedureManager>(this);
                 LifeCycle.mUpdateHandle.AddEventHandler(this._procedureFsm.Tick);
             }
 
-
-            public T RegiestProcedure<T>()
+            public T RegiestProcedure<T>(bool replace = false)
                 where T : BaseProcedure, new()
             {
                 T procedure = this._procedureFsm.AddState<T>();
@@ -21,18 +20,18 @@ namespace com.snake.framework
                 return procedure;
             }
 
-            public bool SwitchProcedure<T>(object userData = null)
-                where T : BaseProcedure
+            public bool SwitchProcedure<T>(bool autoRegiest = true, object userData = null)
+                where T : BaseProcedure, new()
             {
-                return SwitchProcedure(typeof(T).Name, userData);
-            }
-
-            public bool SwitchProcedure(string procedureName, object userData = null)
-            {
+                string procedureName = typeof(T).Name;
                 if (this._procedureFsm.HasState(procedureName) == false)
                 {
-                    SnakeLog.ErrorFormat("切换流程失败。不存在流程:{0}", procedureName);
-                    return false;
+                    if (autoRegiest == false)
+                    {
+                        SnakeLog.ErrorFormat("切换流程失败。不存在流程:{0}", procedureName);
+                        return false;
+                    }
+                    this.RegiestProcedure<T>();
                 }
                 return this._procedureFsm.Switch(procedureName, userData);
             }

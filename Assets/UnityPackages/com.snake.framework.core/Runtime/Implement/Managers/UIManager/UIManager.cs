@@ -7,9 +7,6 @@ namespace com.snake.framework
     {
         public class UIManager : BaseManager
         {
-            public override void Initialization() 
-            {
-            }
         }
     }
 }
