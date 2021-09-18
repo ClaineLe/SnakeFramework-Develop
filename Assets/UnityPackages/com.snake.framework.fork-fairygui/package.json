@@ -1,8 +1,8 @@
 {
   "name": "com.snake.framework.fork-fairygui",
   "displayName": "SnakeFramework-ForkFairyGUI",
-  "version": "4.2.1",
-  "unity": "2018.4",
+  "version": "4.2.3",
+  "unity": "2019.1",
   "license": "MIT",
   "keywords": [
     "snake",
