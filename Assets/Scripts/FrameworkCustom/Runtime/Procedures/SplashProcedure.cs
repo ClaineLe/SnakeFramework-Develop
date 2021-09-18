@@ -10,7 +10,7 @@ namespace com.snake.framework
         protected override void onEnter(ProcedureManager owner, IState<ProcedureManager> fromState, object userData)
         {
             base.onEnter(owner, fromState, userData);
-            SnakeLog.Info("SplashProcedure.onEnter");
+            Debuger.Info("SplashProcedure.onEnter");
 
         }
         protected override void onTick(ProcedureManager owner, int frameCount, float time, float deltaTime, float unscaledTime, float realElapseSeconds)
@@ -24,7 +24,7 @@ namespace com.snake.framework
         protected override void onExit(ProcedureManager owner, IState<ProcedureManager> toState)
         {
             base.onExit(owner, toState);
-            SnakeLog.Info("SplashProcedure.onExit");
+            Debuger.Info("SplashProcedure.onExit");
         }
     }
 }
