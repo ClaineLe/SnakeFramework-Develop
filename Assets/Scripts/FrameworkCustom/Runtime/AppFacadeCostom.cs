@@ -22,15 +22,15 @@ namespace com.snake.framework
             private void _regProcedures()
             {
                 ProcedureManager procedureMgr = Singleton<AppFacade>.GetInstance().GetManager<ProcedureManager>();
-                procedureMgr.RegiestProcedure<BootUpProcedure>();
-                procedureMgr.RegiestProcedure<SplashProcedure>();
-                procedureMgr.RegiestProcedure<PreloadProcedure>();
-                procedureMgr.RegiestProcedure<PlayingProcedure>();
+                /*
+                 * 注册自定义流程
+                 */
             }
 
-            public void GameLaunch()
+            public void EnterGameContent()
             {
-                Singleton<AppFacade>.GetInstance().GetManager<ProcedureManager>().SwitchProcedure<SplashProcedure>();
+                Debuger.Log("EnterGameContent");
+                //Singleton<AppFacade>.GetInstance().GetManager<ProcedureManager>().SwitchProcedure<SplashProcedure>();
             }
         }
     }
