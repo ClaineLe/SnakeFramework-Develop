@@ -66,6 +66,14 @@ namespace com.snake.framework
 
             }
 
+            [MenuItem("SnakeTools/导出UPM到Halo项目中/com.snake.framework.core")]
+            static private void _ExportSnakeFramework_Core()
+            {
+                string repositoriePath = @"F:\WorkSpace\gitlab\halo_windf_client\client\Packages\com.snake.framework.core";
+                Utility.Fold.ClearFold(repositoriePath, null);
+                Utility.Fold.CopyFold("Assets/UnityPackages/com.snake.framework.core", repositoriePath);
+            }
+
             static private void _SyncSnakeFramework_Core(bool debug)
             {
                 string unityPackageName = "com.snake.framework.core";
