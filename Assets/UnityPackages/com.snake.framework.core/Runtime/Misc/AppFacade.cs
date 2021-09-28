@@ -29,6 +29,12 @@ namespace com.snake.framework
                 this._appFacadeCostom.EnterGameContent();
             }
 
+            public T GetAppFacadeCostom<T>()
+                where T : class, IAppFacadeCostom
+            {
+                return _appFacadeCostom as T;
+            }
+
             public T RegiestManager<T>(bool replace = false) where T : IManager
             {
                 System.Type mgrType = typeof(T);
