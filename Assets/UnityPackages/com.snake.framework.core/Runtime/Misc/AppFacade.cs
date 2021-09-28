@@ -12,8 +12,8 @@ namespace com.snake.framework
             protected override void onInitialize()
             {
                 base.onInitialize();
+                LifeCycle.Initialization();
                 this._managerDic = new Dictionary<System.Type, IManager>();
-                this.mLifeCycle = LifeCycle.Create();
             }
 
             public void StartUp(IAppFacadeCostom appFacadeCostom)
