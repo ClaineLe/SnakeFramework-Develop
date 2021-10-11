@@ -11,49 +11,24 @@ namespace com.snake.framework
         public class DownloadManager : BaseManager
         {
             /// <summary>
-            /// 管理器状态
-            /// </summary>
-            public enum STATE 
-            {
-                /// <summary>
-                /// 空闲
-                /// </summary>
-                free,
-                /// <summary>
-                /// 下载中
-                /// </summary>
-                loading,
-            }
-
-            /// <summary>
-            /// 当前状态
-            /// </summary>
-            public STATE mState { get; private set; }
-
-            /// <summary>
-            /// 当前正在下载的任务列表
+            /// 下载任务列表
             /// </summary>
             private List<DownloadTask> _downloadingList;
 
             /// <summary>
-            /// 需要下载的列表
+            /// 下载速度刷新时间（秒）
             /// </summary>
-            private List<DownloadConfig> _downloadFilePathList;
+            private float mUpdateDownloadSpeedInterval = 1;
 
             /// <summary>
-            /// 完成下载列表
+            /// 并行下载数量，（默认5个）
             /// </summary>
-            private List<DownloadConfig> _downloadCompletedList;
+            public int mMaxDownloadTaskCount = 5;
 
             /// <summary>
-            /// 下载失败列表
+            /// 下载速度开关
             /// </summary>
-            private List<DownloadConfig> mDownloadFailList;
-
-            /// <summary>
-            /// 记录时间
-            /// </summary>
-            private float _updateDownloadSpeedInterval = 1;
+            public bool mActiveDownloadSpeedMonitor { get; private set; } = false;
 
             /// <summary>
             /// 下载速度
@@ -61,90 +36,54 @@ namespace com.snake.framework
             public long mDownloadSpeed { get; private set; } = 0;
 
             /// <summary>
-            /// 并行下载数量
-            /// </summary>
-            public int mMaxDownloadTaskCount { get; private set; } = 0;
-
-            /// <summary>
-            /// 获取已经下载的大小
-            /// </summary>
-            public long mDownloadedSize { get; private set; } = 0;
-
-            /// <summary>
             /// 下载的总大小
             /// </summary>
             public long mTotalDownloadSize { get; private set; } = 0;
 
-            private float _prevTickDownloadSpeedTime;
-            private long _prevTickDownloadedSize;
+            //上一次记录下载速度时间
+            private float _prevTickDownloadSpeedTime = 0;
+            //上一次记录下载大小
+            private long _prevTickDownloadedSize = 0;
+            //下载中
+            private bool _downloading = false;
 
             protected override void onInitialization()
             {
                 this._downloadingList = new List<DownloadTask>();
-                this._downloadFilePathList = new List<DownloadConfig>();
-                this._downloadCompletedList = new List<DownloadConfig>();
-                this.mDownloadFailList = new List<DownloadConfig>();
-            }
-          
-            /// <summary>
-            /// 重置下载状态
-            /// </summary>
-            private void reset()
-            {
-                mState = STATE.free;
-                _downloadingList.Clear();
-                _downloadFilePathList.Clear();
-                _downloadCompletedList.Clear();
-                mDownloadFailList.Clear();
-                mDownloadSpeed = 0;
-                this._updateDownloadSpeedInterval = 1;
-                this.mMaxDownloadTaskCount = 5;
-                this.mDownloadedSize = 0;
-                this.mTotalDownloadSize = 0;
-                this._prevTickDownloadSpeedTime = 0;
-                this._prevTickDownloadedSize = 0;
             }
 
             /// <summary>
             /// 计算已经完成下载的大小
             /// </summary>
-            private void internalOperationDownloadedSize()
+            public long GetCurrDownLoadSize()
             {
-                long downloadingSize = _downloadCompletedList.Sum(a => a.size);
+                long downloadingSize = 0;
                 for (var i = 0; i < _downloadingList.Count; i++)
                 {
-                    if (_downloadingList[i].mState != DownloadTask.STATE.downloading)
-                        continue;
-                    downloadingSize += _downloadingList[i].GetDownloadedSize();
+                    DownloadTask task = _downloadingList[i];
+                    switch (task.mState)
+                    {
+                        case DownloadTask.STATE.success:
+                            downloadingSize += task.mTotalSize;
+                            break;
+                        case DownloadTask.STATE.downloading:
+                            downloadingSize += (long)(task.mTotalSize * task.mProgress);
+                            break;
+                        default:
+                            break;
+                    }
                 }
-                mDownloadedSize = downloadingSize;
+                return downloadingSize;
             }
 
             /// <summary>
-            /// 更新下载速度
+            /// 下载速度监控开关
             /// </summary>
-            /// <param name="realElapseSeconds"></param>
-            private void internalUpdateDownloadSpeed(float realElapseSeconds) 
+            public void SetDownloadSpeedMonitor(bool active)
             {
-                if (realElapseSeconds > _prevTickDownloadSpeedTime + _updateDownloadSpeedInterval)
+                if (mActiveDownloadSpeedMonitor == active)
                     return;
-
-                long detailSize = mDownloadedSize - _prevTickDownloadedSize;
-                this.mDownloadSpeed = (long)(detailSize / _updateDownloadSpeedInterval);
-
-                _prevTickDownloadSpeedTime = realElapseSeconds;
-                _prevTickDownloadedSize = mDownloadedSize;
-            }
-
-            /// <summary>
-            /// 当LateTick
-            /// </summary>
-            /// <param name="elapseSeconds"></param>
-            /// <param name="realElapseSeconds"></param>
-            private void onTick(int frameCount, float time, float deltaTime, float unscaledTime, float realElapseSeconds)
-            {
-                internalOperationDownloadedSize();
-                internalUpdateDownloadSpeed(realElapseSeconds);
+                mActiveDownloadSpeedMonitor = active;
             }
 
             /// <summary>
@@ -153,35 +92,22 @@ namespace com.snake.framework
             /// <param name="downloadFilePathQueue"></param>
             /// <param name="downloadingCallback"></param>
             /// <param name="finishCallback"></param>
-            public bool EnqueueDownload(string url, string savePath, long size)
+            async public void StartDownload(string url, string savePath, int priority = 0)
             {
-                if (mState == STATE.loading)
-                    return false;
-
-                DownloadConfig downloadConfig = ReferencePool.Take<DownloadConfig>();
-                downloadConfig.downloadPath = url;
-                downloadConfig.savePath = savePath;
-                downloadConfig.size = size;
-                _downloadFilePathList.Add(downloadConfig);
-                this.mTotalDownloadSize += downloadConfig.size;
-                return true;
-            }
-
-            /// <summary>
-            /// 开始下载
-            /// </summary>
-            /// <param name="asyncDownloadTaskCount">下载线程数量，默认：5， 最高：10</param>
-            /// <param name="updateDownloadSpeedInterval">下载速度更新频率，单位：秒，默认为1秒</param>
-            /// <returns></returns>
-            public bool StartDownload(int asyncDownloadTaskCount = 5, float updateDownloadSpeedInterval = 1.0f)
-            {
-                if (mState == STATE.loading || _downloadFilePathList.Count == 0 || mTotalDownloadSize == 0)
-                    return false;
-                reset();
-                mState = STATE.loading;
-                this.mMaxDownloadTaskCount = UnityEngine.Mathf.Clamp(asyncDownloadTaskCount,1,10);
-                this._updateDownloadSpeedInterval = updateDownloadSpeedInterval;
-                return true;
+                DownloadTask downloadTask = ReferencePool.Take<DownloadTask>();
+                await downloadTask.SetDownloadInfo(url, savePath);
+                this.mTotalDownloadSize += downloadTask.mTotalSize;
+                _downloadingList.Add(downloadTask);
+                if (priority > 0)
+                {
+                    downloadTask.mPriority = priority;
+                    sortPriority();
+                }
+                if (_downloading == false)
+                {
+                    _downloading = true;
+                    LifeCycle.mUpdateHandle.AddEventHandler(onDownloadProcess);
+                }
             }
 
             /// <summary>
@@ -190,15 +116,88 @@ namespace com.snake.framework
             /// <returns></returns>
             public string[] GetDownloadErrorInfos()
             {
-                if (this.mDownloadFailList.Count == 0)
+                if (this._downloadingList.Count == 0)
                     return new string[0];
-
-                string[] errors = new string[this._downloadFilePathList.Count];
-                for (int i = 0; i < this._downloadFilePathList.Count; i++)
-                {
-                    errors[i] = this._downloadFilePathList[i].downloadPath;
-                }
+                string[] errors = new string[this._downloadingList.Count];
+                for (int i = 0; i < this._downloadingList.Count; i++)
+                    errors[i] = this._downloadingList[i].mURL;
                 return errors;
+            }
+
+            /// <summary>
+            /// 下载过程监控
+            /// </summary>
+            /// <param name="frameCount"></param>
+            /// <param name="time"></param>
+            /// <param name="deltaTime"></param>
+            /// <param name="unscaledTime"></param>
+            /// <param name="realElapseSeconds"></param>
+            private void onDownloadProcess(int frameCount, float time, float deltaTime, float unscaledTime, float realElapseSeconds)
+            {
+                int downloadCount = this._downloadingList.Sum(a => a.mState == DownloadTask.STATE.downloading ? 1 : 0);
+                if (this.mMaxDownloadTaskCount > downloadCount)
+                {
+                    int index = _downloadingList.FindIndex(a => a.mState == DownloadTask.STATE.ready);
+                    if (index >= 0)
+                        _downloadingList[index].StartDownLoad();
+                }
+
+                //监控下载速度
+                if (mActiveDownloadSpeedMonitor == true)
+                    internalUpdateDownloadSpeed(realElapseSeconds);
+
+                //如果全部完成，移除tick生命周期
+                foreach (var a in _downloadingList)
+                {
+                    if (a.mIsDone == false)
+                        return;
+                }
+                LifeCycle.mUpdateHandle.RemoveEventHandler(onDownloadProcess);
+
+                //重置环境
+                reset();
+            }
+
+            /// <summary>
+            /// 优先级排序
+            /// </summary>
+            private void sortPriority()
+            {
+                _downloadingList.Sort((left, right) =>
+                {
+                    return left.mPriority.CompareTo(right.mPriority);
+                });
+            }
+
+            /// <summary>
+            /// 更新下载速度
+            /// </summary>
+            /// <param name="realElapseSeconds"></param>
+            private void internalUpdateDownloadSpeed(float realElapseSeconds)
+            {
+                if (realElapseSeconds - _prevTickDownloadSpeedTime < 1.0f)
+                    return;
+                 
+                long downloadedSize = GetCurrDownLoadSize();
+                long detailSize = downloadedSize - _prevTickDownloadedSize;
+                this.mDownloadSpeed = (long)(detailSize / mUpdateDownloadSpeedInterval);
+
+                _prevTickDownloadSpeedTime = realElapseSeconds;
+                _prevTickDownloadedSize = downloadedSize;
+            }
+
+            /// <summary>
+            /// 重置环境
+            /// </summary>
+            private void reset() 
+            {
+                this._prevTickDownloadSpeedTime = 0;
+                this._prevTickDownloadedSize = 0;
+                this._downloading = false;
+
+                mActiveDownloadSpeedMonitor = false;
+                mDownloadSpeed = 0;
+                mTotalDownloadSize = 0;
             }
         }
     }
