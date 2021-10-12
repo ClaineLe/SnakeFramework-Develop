@@ -4,24 +4,22 @@ namespace com.snake.framework
 {
     namespace custom.runtime
     {
-        public class AppFacadeCostom : IAppFacadeCostom
+        public class FrameworkExt : ISnakeFrameworkExt
         {
-            private AppFacade _appFacade;
             public void Initialization()
             {
-                _appFacade = Singleton<AppFacade>.GetInstance();
                 this._regCostomManagers();
                 this._regProcedures();
             }
 
             private void _regCostomManagers()
             {
-                this._appFacade.RegiestManager<LuaManager>();
+                SnakeFramework.Instance.RegiestManager<LuaManager>();
             }
 
             private void _regProcedures()
             {
-                ProcedureManager procedureMgr = Singleton<AppFacade>.GetInstance().GetManager<ProcedureManager>();
+                ProcedureManager procedureMgr = SnakeFramework.Instance.GetManager<ProcedureManager>();
                 /*
                  * 注册自定义流程
                  */
