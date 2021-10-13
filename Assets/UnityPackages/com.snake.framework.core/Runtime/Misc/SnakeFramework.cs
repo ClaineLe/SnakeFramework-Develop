@@ -22,8 +22,10 @@ namespace com.snake.framework
             private Dictionary<System.Type, IManager> _managerDic;
             private ISnakeFrameworkExt _snakeFrameworkExt;
 
+            public UnityEngine.GameObject mRoot { get; private set; }
             protected void initialize()
             {
+                mRoot = new UnityEngine.GameObject("SnakeRoot");
                 LifeCycle.Initialization();
                 this._managerDic = new Dictionary<System.Type, IManager>();
             }
