@@ -21,12 +21,13 @@ namespace com.snake.framework
 
             private Dictionary<System.Type, IManager> _managerDic;
             private ISnakeFrameworkExt _snakeFrameworkExt;
-
+            public LifeCycle mLifeCycle { get; private set; }
             public UnityEngine.GameObject mRoot { get; private set; }
             protected void initialize()
             {
                 mRoot = new UnityEngine.GameObject("SnakeRoot");
-                LifeCycle.Initialization();
+                UnityEngine.GameObject.DontDestroyOnLoad(mRoot);
+                this.mLifeCycle = LifeCycle.Create(mRoot);
                 this._managerDic = new Dictionary<System.Type, IManager>();
             }
 

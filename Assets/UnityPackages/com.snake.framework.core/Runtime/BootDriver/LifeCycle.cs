@@ -17,10 +17,9 @@ namespace com.snake.framework
             public SnakeEvent<bool> mApplicationFocusHandle = new SnakeEvent<bool>();
             public SnakeEvent<bool> mApplicationPauseHandle = new SnakeEvent<bool>();
 
-            static public void Initialization()
+            static public LifeCycle Create(GameObject frameworkRoot)
             {
-                GameObject lifeCycleRoot = new UnityEngine.GameObject("LifeCycle", new[] { typeof(LifeCycle) });
-                GameObject.DontDestroyOnLoad(lifeCycleRoot);
+                return frameworkRoot.AddComponent<LifeCycle>();
             }
 
             private void Start()
