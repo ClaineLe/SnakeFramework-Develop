@@ -4,6 +4,7 @@
     {
         public abstract class BaseManager : IManager
         {
+            public SnakeFramework mFramework => SnakeFramework.Instance;
             public virtual string mName => this.GetType().Name;
 
             public virtual float GetInitProgress() { return 1.0f; }
