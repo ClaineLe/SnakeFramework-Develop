@@ -49,6 +49,7 @@ namespace com.snake.framework
                     throw new System.Exception("管理器已经存在.MgrName:" + mgrType);
                 }
                 T manager = (T)System.Activator.CreateInstance(mgrType);
+                manager.Regiested();
                 _managerDic[mgrType] = manager;
                 return manager;
             }
