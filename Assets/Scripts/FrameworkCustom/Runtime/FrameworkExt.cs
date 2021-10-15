@@ -20,6 +20,7 @@ namespace com.snake.framework
             private void _regProcedures()
             {
                 ProcedureManager procedureMgr = SnakeFramework.Instance.GetManager<ProcedureManager>();
+                procedureMgr.RegiestProcedure<GameProcedure>();
                 /*
                  * 注册自定义流程
                  */
@@ -27,8 +28,8 @@ namespace com.snake.framework
 
             public void EnterGameContent()
             {
-                Debuger.Log("EnterGameContent");
-                //Singleton<AppFacade>.GetInstance().GetManager<ProcedureManager>().SwitchProcedure<SplashProcedure>();
+                ProcedureManager procedureMgr = SnakeFramework.Instance.GetManager<ProcedureManager>();
+                procedureMgr.SwitchProcedure<GameProcedure>();
             }
         }
     }
