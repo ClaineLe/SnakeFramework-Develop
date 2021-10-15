@@ -9,6 +9,18 @@
             public const string Windows = "Windows";
             public const string OSX = "OSX";
 
+
+#if UNITY_EDITOR
+            static public bool Editor = true;
+#else
+            static public bool Editor = false;
+#endif
+
+            public static bool IsIOS() 
+            {
+                return GetPlatformName().Equals(iOS);
+            }
+
             public static string GetPlatformName()
             {
 #if UNITY_EDITOR
