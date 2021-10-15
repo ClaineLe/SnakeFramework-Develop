@@ -27,15 +27,15 @@
                         return null;
                 }
 #else
-              switch (Application.platform)
+              switch (UnityEngine.Application.platform)
                 {
-                    case RuntimePlatform.Android:
+                    case UnityEngine.RuntimePlatform.Android:
                         return "Android";
-                    case RuntimePlatform.IPhonePlayer:
+                    case UnityEngine.RuntimePlatform.IPhonePlayer:
                         return "iOS";
-                    case RuntimePlatform.WindowsPlayer:
+                    case UnityEngine.RuntimePlatform.WindowsPlayer:
                         return "Windows";
-                    case RuntimePlatform.OSXPlayer:
+                    case UnityEngine.RuntimePlatform.OSXPlayer:
                         return "OSX";
                     default:
                         return null;
