@@ -8,11 +8,14 @@ namespace com.snake.framework
         {
             private int _timerIndex = int.MinValue;
             
-            private List<BaseTimer> _timerList = new List<BaseTimer>();
+            private List<BaseTimer> _timerList;
+
+            private List<BaseTimer> _timerCacheList;
 
             protected override void onInitialization()
             {
                 this._timerList = new List<BaseTimer>();
+                this._timerCacheList = new List<BaseTimer>();
             }
             protected override void onPreload()
             {
@@ -29,7 +32,7 @@ namespace com.snake.framework
                    UnityEngine.Time.unscaledTime,
                    UnityEngine.Time.realtimeSinceStartup);
                 timer.SetEndDuration(durationTime);
-                this._timerList.Add(timer);
+                this._timerCacheList.Add(timer);
                 return timer.mId;
             }
 
@@ -43,7 +46,7 @@ namespace com.snake.framework
                    UnityEngine.Time.unscaledTime,
                    UnityEngine.Time.realtimeSinceStartup);
                 timer.SetEndFrameNum(frameCount);
-                this._timerList.Add(timer);
+                this._timerCacheList.Add(timer);
                 return timer.mId;
             }
 
@@ -58,6 +61,9 @@ namespace com.snake.framework
 
             protected void onTick(int frameCount, float time, float deltaTime, float unscaledTime, float realElapseSeconds)
             {
+                this._timerList.AddRange(_timerCacheList);
+                _timerCacheList.Clear();
+
                 for (int i = 0; i < this._timerList.Count; i++)
                 {
                     BaseTimer timer = this._timerList[i];
