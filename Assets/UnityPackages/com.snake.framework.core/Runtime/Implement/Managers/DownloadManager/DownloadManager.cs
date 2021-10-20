@@ -40,12 +40,20 @@ namespace com.snake.framework
             /// </summary>
             public long mTotalDownloadSize { get; private set; } = 0;
 
+            /// <summary>
+            /// 是否下载中
+            /// </summary>
+            public bool mDownloading { get; private set; } = false;
+
+            /// <summary>
+            /// 完成所有下载任务的回调
+            /// </summary>
+            public System.Action mOnCompleted { get; private set; }
+
             //上一次记录下载速度时间
             private float _prevTickDownloadSpeedTime = 0;
             //上一次记录下载大小
             private long _prevTickDownloadedSize = 0;
-            //下载中
-            private bool _downloading = false;
 
             protected override void onInitialization()
             {
@@ -103,9 +111,9 @@ namespace com.snake.framework
                     downloadTask.mPriority = priority;
                     sortPriority();
                 }
-                if (_downloading == false)
+                if (mDownloading == false)
                 {
-                    _downloading = true;
+                    mDownloading = true;
                     mFramework.mLifeCycle.mUpdateHandle.AddEventHandler(onDownloadProcess);
                 }
             }
@@ -154,6 +162,8 @@ namespace com.snake.framework
                 }
                 mFramework.mLifeCycle.mUpdateHandle.RemoveEventHandler(onDownloadProcess);
 
+                this.mOnCompleted?.Invoke();
+
                 //重置环境
                 reset();
             }
@@ -191,10 +201,12 @@ namespace com.snake.framework
             /// </summary>
             private void reset() 
             {
+
                 this._prevTickDownloadSpeedTime = 0;
                 this._prevTickDownloadedSize = 0;
-                this._downloading = false;
 
+                mOnCompleted = null;
+                mDownloading = false;
                 mActiveDownloadSpeedMonitor = false;
                 mDownloadSpeed = 0;
                 mTotalDownloadSize = 0;
