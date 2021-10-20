@@ -133,6 +133,21 @@ namespace com.snake.framework
             }
 
             /// <summary>
+            /// 获取已经获取web头，但未开始下载的数量
+            /// </summary>
+            /// <returns></returns>
+            public int GetReadyTaskCount() 
+            {
+                if (this._downloadingList == null)
+                    return 0;
+
+                int count = 0;
+                for (int i = 0; i < this._downloadingList.Count; i++)
+                    count += this._downloadingList[i].mState == DownloadTask.STATE.ready ? 1 : 0;
+                return count;
+            }
+
+            /// <summary>
             /// 下载过程监控
             /// </summary>
             /// <param name="frameCount"></param>
