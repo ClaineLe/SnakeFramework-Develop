@@ -102,19 +102,20 @@ namespace com.snake.framework
             /// <param name="finishCallback"></param>
             async public void StartDownload(string url, string savePath, int priority = 0)
             {
-                DownloadTask downloadTask = ReferencePool.Take<DownloadTask>();
-                await downloadTask.SetDownloadInfo(url, savePath);
-                this.mTotalDownloadSize += downloadTask.mTotalSize;
-                _downloadingList.Add(downloadTask);
-                if (priority > 0)
-                {
-                    downloadTask.mPriority = priority;
-                    sortPriority();
-                }
                 if (mDownloading == false)
                 {
                     mDownloading = true;
                     mFramework.mLifeCycle.mUpdateHandle.AddEventHandler(onDownloadProcess);
+                }
+
+                DownloadTask downloadTask = ReferencePool.Take<DownloadTask>();
+                _downloadingList.Add(downloadTask);
+                await downloadTask.SetDownloadInfo(url, savePath);
+                this.mTotalDownloadSize += downloadTask.mTotalSize;
+                if (priority > 0)
+                {
+                    downloadTask.mPriority = priority;
+                    sortPriority();
                 }
             }
 
