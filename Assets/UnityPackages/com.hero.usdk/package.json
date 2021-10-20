@@ -1,0 +1,18 @@
+{
+  "name": "com.hero.usdk",
+  "displayName": "HERO-USDK",
+  "version": "1.0.0",
+  "unity": "2019.4",
+  "license": "MIT",
+  "keywords": [
+    "hero",
+    "usdk",
+    "framework"
+  ],
+  "author": {
+    "name": "ClaineLe",
+    "email": "7941324@qq.com"
+  },
+  "description": "HeroUSDKUnitySupport_V1.0.0,http://docs.sdksrv.com/usdk-new/unity/",
+  "dependencies": {}
+}

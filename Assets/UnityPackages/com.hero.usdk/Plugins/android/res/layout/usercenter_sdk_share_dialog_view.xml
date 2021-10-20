@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+             android:layout_width="match_parent"
+             android:layout_height="match_parent"
+             android:background="#000000"
+             android:alpha="0.8">
+
+    <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:orientation="vertical">
+
+        <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:textSize="15sp"
+                android:text="@string/bloc_share"/>
+
+        <TextView
+                android:layout_width="100dp"
+                android:layout_height="1px"
+                android:layout_marginTop="10dp"
+                android:layout_gravity="center_horizontal"
+                android:background="#ffffff"/>
+
+        <GridView xmlns:android="http://schemas.android.com/apk/res/android"
+                  android:id="@+id/gridView"
+                  android:layout_width="match_parent"
+                  android:layout_height="wrap_content"
+                  android:layout_marginTop="50dp"
+                  android:gravity="center"
+                  android:horizontalSpacing="0dp"
+                  android:listSelector="@android:color/transparent"
+                  android:numColumns="4"
+                  android:orientation="vertical"
+                  android:overScrollMode="never"
+                  android:paddingBottom="10dp"
+                  android:paddingTop="10dp"
+                  android:scrollbars="none"
+                  android:stretchMode="columnWidth"
+                  android:verticalSpacing="5dp" />
+    </LinearLayout>
+
+    <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="#ffffff"
+            android:textSize="12sp"
+            android:layout_gravity="bottom|center_horizontal"
+            android:layout_marginBottom="20dp"
+            android:text="分享之后记得返回游戏参与活动"/>
+
+    <ImageView
+            android:id="@+id/txt_cancel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="right"
+            android:padding="20dp"
+            android:src="@drawable/bloc_share_icon_cancel"/>
+</FrameLayout>

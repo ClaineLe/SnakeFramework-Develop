@@ -1,0 +1,345 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+             android:layout_width="match_parent"
+             android:layout_height="match_parent"
+             android:animateLayoutChanges="true"
+             android:orientation="vertical">
+
+    <LinearLayout
+            android:id="@+id/uc_sdk_webview_container"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:animateLayoutChanges="true"
+            android:orientation="vertical"
+            android:visibility="visible">
+
+        <RelativeLayout
+                android:id="@+id/uc_sdk_webviewtool_root_top"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/bloc_main_web_tool_color"
+                android:gravity="center_vertical"
+                android:orientation="horizontal"
+                android:paddingLeft="@dimen/bloc_main_web_tool_margin"
+                android:paddingRight="@dimen/bloc_main_web_tool_margin"
+                android:visibility="gone">
+
+
+            <ImageView
+                    android:id="@+id/uc_sdk_webviewtool_close_top"
+                    style="@style/bloc_tool_buttom_image"
+                    android:layout_alignParentRight="true"
+                    android:src="@drawable/bloc_dark_webtool_close_select" />
+
+
+            <ImageView
+                    android:id="@+id/uc_sdk_webviewtool_share_top"
+                    style="@style/bloc_tool_buttom_image"
+                    android:layout_toLeftOf="@+id/uc_sdk_webviewtool_close_top"
+                    android:src="@drawable/bloc_webtool_share_select"
+                    android:visibility="gone" />
+
+
+            <ImageView
+                    android:id="@+id/uc_sdk_webviewtool_refresh_top"
+                    style="@style/bloc_tool_buttom_image"
+                    android:layout_marginRight="@dimen/bloc_pull_new_imageview_margin"
+                    android:layout_toLeftOf="@+id/uc_sdk_webviewtool_share_top"
+                    android:src="@drawable/bloc_dark_webtool_refresh_select" />
+
+
+            <ImageView
+                    android:id="@+id/uc_sdk_webviewtool_forward_top"
+                    style="@style/bloc_tool_buttom_image"
+                    android:layout_marginRight="@dimen/bloc_pull_new_imageview_margin"
+                    android:layout_toLeftOf="@+id/uc_sdk_webviewtool_refresh_top"
+                    android:src="@drawable/bloc_dark_webtool_forward_select" />
+
+
+            <ImageView
+                    android:id="@+id/uc_sdk_webviewtool_back_top"
+                    style="@style/bloc_tool_buttom_image"
+                    android:layout_marginRight="@dimen/bloc_pull_new_imageview_margin"
+                    android:layout_toLeftOf="@+id/uc_sdk_webviewtool_forward_top"
+                    android:src="@drawable/bloc_dark_webtool_back_select" />
+
+
+        </RelativeLayout>
+
+        <LinearLayout
+                android:layout_weight="1"
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+            <RelativeLayout
+                    android:id="@+id/uc_sdk_webviewtool_root_left"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:background="@color/bloc_main_web_tool_color"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal"
+                    android:visibility="gone">
+
+
+                <ImageView
+                        android:padding="15dp"
+                        android:id="@+id/uc_sdk_webviewtool_close_left"
+                        style="@style/bloc_tool_buttom_image"
+                        android:layout_alignParentBottom="true"
+                        android:src="@drawable/bloc_light_webtool_close_select"/>
+
+
+                <ImageView
+                        android:id="@+id/uc_sdk_webviewtool_share_left"
+                        style="@style/bloc_tool_buttom_image"
+                        android:layout_toLeftOf="@+id/uc_sdk_webviewtool_close_left"
+                        android:src="@drawable/bloc_webtool_share_select"
+                        android:visibility="gone"/>
+
+
+                <ImageView
+                        android:visibility="gone"
+                        android:padding="15dp"
+                        android:id="@+id/uc_sdk_webviewtool_refresh_left"
+                        style="@style/bloc_tool_buttom_image"
+                        android:layout_marginRight="@dimen/bloc_pull_new_imageview_margin"
+                        android:layout_above="@+id/uc_sdk_webviewtool_close_left"
+                        android:src="@drawable/bloc_dark_webtool_refresh_select"/>
+
+
+                <ImageView
+                        android:padding="15dp"
+                        android:layout_alignParentTop="true"
+                        android:id="@+id/uc_sdk_webviewtool_back_left"
+                        style="@style/bloc_tool_buttom_image"
+                        android:src="@drawable/bloc_dark_webtool_back_select"/>
+
+                <ImageView
+                        android:visibility="gone"
+                        android:padding="15dp"
+                        android:id="@+id/uc_sdk_webviewtool_forward_left"
+                        style="@style/bloc_tool_buttom_image"
+                        android:layout_below="@+id/uc_sdk_webviewtool_back_left"
+                        android:src="@drawable/bloc_dark_webtool_forward_select"/>
+            </RelativeLayout>
+
+            <FrameLayout
+                    android:id="@+id/uc_sdk_webview_root"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_weight="0.5"
+                    android:background="@android:color/white"
+                    android:fitsSystemWindows="true">
+
+                <!--<WebView
+                        android:id="@+id/uc_sdk_webview"
+                        android:background="@android:color/transparent"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"/>-->
+
+                <ProgressBar
+                        android:id="@+id/uc_sdk_webview_progressbar"
+                        style="?android:attr/progressBarStyleHorizontal"
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/bloc_pull_new_progress_heigt"
+                        android:progress="0"
+                        android:progressDrawable="@drawable/bloc_progress_style"
+                        android:visibility="visible"/>
+
+                <TextView
+                        android:id="@+id/uc_sdk_time"
+                        android:layout_width="300dp"
+                        android:layout_height="200dp"
+                        android:longClickable="true"
+                        android:scrollbars="vertical"
+                        android:layout_marginRight="10dp"
+                        android:padding="10dp"
+                        android:layout_gravity="right|center_vertical"
+                        android:background="#55000000"
+                        android:textColor="#ffffff"
+                        android:visibility="gone"/>
+            </FrameLayout>
+
+            <RelativeLayout
+                    android:id="@+id/uc_sdk_webviewtool_root_right"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:background="@color/bloc_main_web_tool_color"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal"
+                    android:visibility="gone">
+
+
+                <ImageView
+                        android:padding="15dp"
+                        android:id="@+id/uc_sdk_webviewtool_close_right"
+                        style="@style/bloc_tool_buttom_image"
+                        android:layout_alignParentBottom="true"
+                        android:src="@drawable/bloc_light_webtool_close_select"/>
+
+
+                <ImageView
+                        android:id="@+id/uc_sdk_webviewtool_share_right"
+                        style="@style/bloc_tool_buttom_image"
+                        android:layout_toLeftOf="@+id/uc_sdk_webviewtool_close_right"
+                        android:src="@drawable/bloc_webtool_share_select"
+                        android:visibility="gone"/>
+
+
+                <ImageView
+                        android:visibility="gone"
+                        android:padding="15dp"
+                        android:id="@+id/uc_sdk_webviewtool_refresh_right"
+                        style="@style/bloc_tool_buttom_image"
+                        android:layout_marginRight="@dimen/bloc_pull_new_imageview_margin"
+                        android:layout_above="@+id/uc_sdk_webviewtool_close_right"
+                        android:src="@drawable/bloc_dark_webtool_refresh_select"/>
+
+
+                <ImageView
+                        android:padding="15dp"
+                        android:layout_alignParentTop="true"
+                        android:id="@+id/uc_sdk_webviewtool_back_right"
+                        style="@style/bloc_tool_buttom_image"
+                        android:src="@drawable/bloc_dark_webtool_back_select"/>
+
+                <ImageView
+                        android:visibility="gone"
+                        android:padding="15dp"
+                        android:id="@+id/uc_sdk_webviewtool_forward_right"
+                        style="@style/bloc_tool_buttom_image"
+                        android:layout_below="@+id/uc_sdk_webviewtool_back_right"
+                        android:src="@drawable/bloc_dark_webtool_forward_select"/>
+            </RelativeLayout>
+        </LinearLayout>
+        <RelativeLayout
+                android:id="@+id/uc_sdk_webviewtool_root"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/bloc_main_web_tool_color"
+                android:orientation="horizontal">
+
+
+            <ImageView
+                    android:id="@+id/uc_sdk_webviewtool_back"
+                    style="@style/bloc_tool_buttom_image"
+                    android:layout_marginLeft="15dp"
+                    android:src="@drawable/bloc_light_webtool_back_select" />
+
+
+            <ImageView
+                    android:id="@+id/uc_sdk_webviewtool_forward"
+                    style="@style/bloc_tool_buttom_image"
+                    android:layout_marginLeft="55dp"
+                    android:layout_toRightOf="@+id/uc_sdk_webviewtool_back"
+                    android:src="@drawable/bloc_light_webtool_forward_select" />
+
+
+            <ImageView
+                    android:id="@+id/uc_sdk_webviewtool_refresh"
+                    style="@style/bloc_tool_buttom_image"
+                    android:layout_marginLeft="55dp"
+                    android:layout_toRightOf="@+id/uc_sdk_webviewtool_forward"
+                    android:src="@drawable/bloc_light_webtool_refresh_select" />
+
+
+            <ImageView
+                    android:id="@+id/uc_sdk_webviewtool_share"
+                    style="@style/bloc_tool_buttom_image"
+                    android:src="@drawable/bloc_webtool_share_select"
+                    android:visibility="gone" />
+
+
+            <ImageView
+                    android:id="@+id/uc_sdk_webviewtool_close"
+                    style="@style/bloc_tool_buttom_image"
+                    android:layout_alignParentRight="true"
+                    android:layout_marginRight="25dp"
+                    android:src="@drawable/bloc_light_webtool_close_select" />
+        </RelativeLayout>
+
+
+        <LinearLayout
+                android:id="@+id/uc_sdk_webviewtool_root_default"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/bloc_main_web_tool_color"
+                android:gravity="center_vertical"
+                android:orientation="horizontal"
+                android:visibility="gone">
+
+            <RelativeLayout
+                    android:layout_width="0px"
+                    android:layout_height="match_parent"
+                    android:layout_marginLeft="30dp"
+                    android:layout_weight="1"
+                    android:gravity="center">
+
+                <ImageView
+                        android:id="@+id/uc_sdk_webviewtool_back_default"
+                        style="@style/bloc_tool_buttom_image"
+                        android:src="@drawable/bloc_light_webtool_back_select" />
+            </RelativeLayout>
+
+            <RelativeLayout
+                    android:layout_width="0px"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:gravity="center">
+
+                <ImageView
+                        android:id="@+id/uc_sdk_webviewtool_forward_default"
+                        style="@style/bloc_tool_buttom_image"
+                        android:src="@drawable/bloc_light_webtool_forward_select" />
+            </RelativeLayout>
+
+            <RelativeLayout
+                    android:layout_width="0px"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:gravity="center">
+
+                <ImageView
+                        android:id="@+id/uc_sdk_webviewtool_refresh_default"
+                        style="@style/bloc_tool_buttom_image"
+                        android:src="@drawable/bloc_light_webtool_refresh_select" />
+            </RelativeLayout>
+
+            <RelativeLayout
+                    android:layout_width="0px"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:visibility="gone">
+
+                <ImageView
+                        android:id="@+id/uc_sdk_webviewtool_share_default"
+                        style="@style/bloc_tool_buttom_image"
+                        android:src="@drawable/bloc_webtool_share_select" />
+            </RelativeLayout>
+
+            <RelativeLayout
+                    android:layout_width="0px"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:gravity="center">
+
+                <ImageView
+                        android:id="@+id/uc_sdk_webviewtool_close_deufalt"
+                        style="@style/bloc_tool_buttom_image"
+                        android:src="@drawable/bloc_light_webtool_close_select" />
+            </RelativeLayout>
+        </LinearLayout>
+
+
+    </LinearLayout>
+
+    <FrameLayout
+            android:id="@+id/uc_sdk_webviewtool_video_view"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:background="@android:color/black"
+            android:visibility="gone" />
+
+</FrameLayout>

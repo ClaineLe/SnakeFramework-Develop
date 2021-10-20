@@ -1,0 +1,16 @@
+<resources version="1.0" encoding="utf-8">
+    <!-->网页操作栏的宽度<-->
+    <dimen name="bloc_webtool_height">40dp</dimen>
+    <!-->网页操作栏按钮之间的间距<-->
+    <dimen name="bloc_pull_new_progress_heigt">4dp</dimen>
+    <dimen name="bloc_pull_new_progress_margin">2dp</dimen>
+    <dimen name="bloc_pull_new_webview_margin">3dp</dimen>
+    <dimen name="bloc_pull_new_imageview_margin">20dp</dimen>
+    <dimen name="bloc_main_web_tool_margin">20dp</dimen>
+    <dimen name="bloc_tab_height">45dp</dimen>
+    <dimen name="bloc_horizontal_margin">16dp</dimen>
+    <dimen name="bloc_vertical_margin">10dp</dimen>
+
+    <dimen name="photo_select_oval_size">23dp</dimen>
+    <dimen name="photo_select_preview">24dp</dimen>
+</resources>

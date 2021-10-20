@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                android:id="@android:id/tabhost"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="#EEEEEE"
+                android:orientation="vertical">
+
+    <LinearLayout
+            android:id="@+id/ll_photo_operation"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_vertical"
+            android:background="@android:color/white">
+
+        <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:gravity="center_vertical"
+                android:layout_weight="1">
+
+            <ImageView
+                    android:id="@+id/tv_photo_back"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:paddingLeft="15dp"
+                    android:paddingRight="5dp"
+                    android:src="@drawable/bloc_dark_webtool_back_select"/>
+
+            <TextView
+                    android:id="@+id/tv_photo_scan"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginRight="10dp"
+                    android:gravity="left"
+                    android:clickable="true"
+                    android:textSize="14sp"
+                    android:textColor="#4b525b"
+                    android:maxLines="1"
+                    android:ellipsize="end"/>
+        </LinearLayout>
+
+        <TextView
+                android:id="@+id/tv_photo_cancle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="#6e7b8c"
+                android:gravity="center"
+                android:clickable="true"
+                android:paddingTop="5dp"
+                android:paddingBottom="5dp"
+                android:paddingRight="15dp"
+                android:paddingLeft="15dp"
+                android:textSize="14sp"
+                android:layout_marginRight="10dp"
+                android:background="@drawable/bloc_comment_cancle_btn"
+                android:text="@string/photo_cancle"/>
+
+        <TextView
+                android:id="@+id/tv_photo_ok"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/bloc_white"
+                android:gravity="center"
+                android:clickable="true"
+                android:paddingTop="5dp"
+                android:paddingBottom="5dp"
+                android:paddingRight="10dp"
+                android:paddingLeft="10dp"
+                android:textSize="14sp"
+                android:layout_marginRight="10dp"
+                android:background="@drawable/bloc_comment_send_btn"
+                android:text="@string/photo_ok"/>
+    </LinearLayout>
+
+    <org.jar.support.v7.widget.RecyclerView
+            android:id="@+id/lv_photo_folder"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_below="@+id/ll_photo_operation"
+            android:scrollbars="none"
+            android:layout_marginTop="2dp"/>
+
+</RelativeLayout>

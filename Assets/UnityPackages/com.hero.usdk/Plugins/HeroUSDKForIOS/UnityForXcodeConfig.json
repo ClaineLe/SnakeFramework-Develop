@@ -1,0 +1,53 @@
+{
+	"libs":{
+		"+":[
+			"libicucore.tbd",
+			"libz.tbd",
+			"libstdc++.tbd",
+			"libsqlite3.tbd",
+			"libc++.tbd",
+			"libxml2.tbd",
+			"libiconv.tbd",
+			"libresolv.tbd"
+		],
+		"-":[]
+	},
+	"frameworks":{
+		"+": [
+			"WebKit.framework",
+			"ImageIO.framework",
+			"Security.framework",
+			"CFNetwork.framework",
+			"SystemConfiguration.framework",
+			"MobileCoreServices.framework",
+			"AuthenticationServices.framework"
+		],
+		"-":[]
+	},
+    "embedframeworks":{
+		"+": [
+			"HeroBaseSDK.framework",
+			"HeroUSDK.framework"
+		],
+        "-":[]
+    },
+	"xcodeelements": {},
+	"properties":{
+		"=":{
+			"ENABLE_BITCODE":"NO",
+			"GCC_ENABLE_OBJC_EXCEPTIONS":true
+			},
+		"+":{
+			"OTHER_LDFLAGS":["-ObjC"]
+			},
+		"-":{}
+	},
+	"plist":{
+		"NSPhotoLibraryUsageDescription":"相册权限",
+		"NSPhotoLibraryAddUsageDescription":"相册权限",
+		"NSLocalNetworkUsageDescription":"本地网络"
+	},
+	"files":{},
+	"folders":{},
+	"filesCompileFlag":{}
+}

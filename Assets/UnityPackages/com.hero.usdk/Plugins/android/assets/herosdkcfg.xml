@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <!--HeroUSDK的必传参数，productID，接入时请将其替换为游戏对应的值-->
+    <string name="_hu_pid_">12345678</string>
+	
+	<!--HeroUSDK的必传参数，productKey，接入时请将其替换为游戏对应的值-->
+    <string name="_hu_pk_">12345678</string>
+	
+    <!--助手功能已废弃,该部分用于兼容,不接入助手无需配置-->
+	<!--<string name="hu_bloc_app_key">seSTFxDmiRgFERzzdMWfkhCwuouHGcLU</string>
+    <string name="hu_bloc_game_id">24</string>-->
+
+</resources>
