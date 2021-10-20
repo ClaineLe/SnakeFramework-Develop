@@ -216,10 +216,10 @@ namespace com.snake.framework
             /// </summary>
             private void reset() 
             {
-
                 this._prevTickDownloadSpeedTime = 0;
                 this._prevTickDownloadedSize = 0;
 
+                _downloadingList?.Clear();
                 mOnCompleted = null;
                 mDownloading = false;
                 mActiveDownloadSpeedMonitor = false;
