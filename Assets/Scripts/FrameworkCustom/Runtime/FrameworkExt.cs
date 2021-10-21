@@ -6,36 +6,73 @@ namespace com.snake.framework
     {
         public class SplashUserInterface : ISplashUserInterface
         {
-            private bool _isDone = false;
-            public bool mIsDone => _isDone;
+            public string Name => throw new System.NotImplementedException();
 
-            public void Start()
+            public bool mIsDone => throw new System.NotImplementedException();
+
+            public float mProgress => throw new System.NotImplementedException();
+
+            public string mError => throw new System.NotImplementedException();
+
+            public void Dispose()
             {
-                SnakeDebuger.Log("SplashUserInterface");
+                throw new System.NotImplementedException();
             }
 
-            public void Tick(float progress)
+            public void Enter(object userData = null)
             {
-                _isDone = true;
+                throw new System.NotImplementedException();
+            }
+
+            public void Exit()
+            {
+                throw new System.NotImplementedException();
+            }
+
+            public void Init()
+            {
+                throw new System.NotImplementedException();
+            }
+
+            public void Tick(int frameCount, float time, float deltaTime, float unscaledTime, float realElapseSeconds)
+            {
+                throw new System.NotImplementedException();
             }
         }
 
         public class UpdateController : IUpdateController
         {
-            private bool _isDone = false;
-            public bool mIsDone => _isDone;
+            public string Name => throw new System.NotImplementedException();
+
+            public bool mIsDone => throw new System.NotImplementedException();
+
+            public float mProgress => throw new System.NotImplementedException();
+
+            public string mError => throw new System.NotImplementedException();
 
             public void Dispose()
             {
+                throw new System.NotImplementedException();
             }
 
-            public void Enter()
+            public void Enter(object userData = null)
             {
+                throw new System.NotImplementedException();
             }
 
-            public void Tick()
+            public void Exit()
             {
-                _isDone = true;
+                throw new System.NotImplementedException();
+            }
+
+            public void Init()
+            {
+                throw new System.NotImplementedException();
+            }
+
+            public void Tick(int frameCount, float time, float deltaTime, float unscaledTime, float realElapseSeconds)
+            {
+                throw new System.NotImplementedException();
             }
         }
 
