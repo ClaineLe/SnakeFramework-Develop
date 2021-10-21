@@ -16,12 +16,9 @@ namespace com.snake.framework
             {
                 this._timerList = new List<BaseTimer>();
                 this._timerCacheList = new List<BaseTimer>();
-            }
-            protected override void onPreload()
-            {
-                base.onPreload();
                 mFramework.mLifeCycle.mUpdateHandle.AddEventHandler(this.onTick);
             }
+
             public int StartTimer(float durationTime, System.Action onCompletedHandle, bool unscaledTime = false)
             {
                 DurationTimer timer = unscaledTime ? ReferencePool.Take<UnscaleTimer>() : ReferencePool.Take<DurationTimer>();
