@@ -4,10 +4,48 @@ namespace com.snake.framework
 {
     namespace custom.runtime
     {
+        public class SplashUserInterface : ISplashUserInterface
+        {
+            private bool _isDone = false;
+            public bool mIsDone => _isDone;
+
+            public void Start()
+            {
+                SnakeDebuger.Log("SplashUserInterface");
+            }
+
+            public void Tick(float progress)
+            {
+                _isDone = true;
+            }
+        }
+
+        public class UpdateController : IUpdateController
+        {
+            private bool _isDone = false;
+            public bool mIsDone => _isDone;
+
+            public void Dispose()
+            {
+            }
+
+            public void Enter()
+            {
+            }
+
+            public void Tick()
+            {
+                _isDone = true;
+            }
+        }
+
         public class FrameworkExt : ISnakeFrameworkExt
         {
             public void Initialization()
             {
+                SnakeFramework.Instance.SetupSplashUserInterface<SplashUserInterface>();
+                SnakeFramework.Instance.SetupUpdateController<UpdateController>();
+
                 this._regCostomManagers();
                 this._regProcedures();
             }
@@ -28,9 +66,11 @@ namespace com.snake.framework
 
             public void EnterGameContent()
             {
+                SnakeDebuger.Log("EnterGameContent");
                 ProcedureManager procedureMgr = SnakeFramework.Instance.GetManager<ProcedureManager>();
                 procedureMgr.SwitchProcedure<GameProcedure>();
             }
+
         }
     }
 }
