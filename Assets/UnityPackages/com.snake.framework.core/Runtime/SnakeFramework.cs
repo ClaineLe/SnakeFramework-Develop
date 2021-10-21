@@ -9,9 +9,10 @@ namespace com.snake.framework
             static private SnakeFramework _instance;
             static public SnakeFramework Instance
             {
-                get {
+                get
+                {
                     if (_instance == null)
-                    { 
+                    {
                         _instance = new SnakeFramework();
                         _instance.initialize();
                     }
@@ -23,6 +24,10 @@ namespace com.snake.framework
             private ISnakeFrameworkExt _snakeFrameworkExt;
             public LifeCycle mLifeCycle { get; private set; }
             public UnityEngine.GameObject mRoot { get; private set; }
+
+            public ISplashUserInterface mSplashUserInterface { get; private set; }
+            public IUpdateController mUpdateController { get; private set; }
+
             protected void initialize()
             {
                 mRoot = new UnityEngine.GameObject("SnakeRoot");
@@ -44,6 +49,16 @@ namespace com.snake.framework
             public void EnterGameContent()
             {
                 this._snakeFrameworkExt.EnterGameContent();
+            }
+
+            public void SetupSplashUserInterface<T>() where T : ISplashUserInterface, new()
+            {
+                this.mSplashUserInterface = new T();
+            }
+
+            public void SetupUpdateController<T>() where T : IUpdateController, new() 
+            {
+                this.mUpdateController = new T();
             }
 
             public T RegiestManager<T>(bool replace = false) where T : IManager
@@ -74,21 +89,21 @@ namespace com.snake.framework
                 return manager;
             }
 
-            public void InitManagers()
+            internal void InitManagers()
             {
+                SnakeDebuger.Log("InitManagers");
                 Dictionary<System.Type, IManager>.Enumerator enumerator = this._managerDic.GetEnumerator();
                 while (enumerator.MoveNext())
                     enumerator.Current.Value.Initialization();
             }
-
-            public void PreloadManagers()
+            internal void PreloadManagers()
             {
                 Dictionary<System.Type, IManager>.Enumerator enumerator = this._managerDic.GetEnumerator();
                 while (enumerator.MoveNext())
                     enumerator.Current.Value.Preload();
             }
 
-            public float GetInitProgress()
+            internal float GetInitProgress()
             {
                 float count = this._managerDic.Count;
                 float progress = 0.0f;
@@ -100,7 +115,7 @@ namespace com.snake.framework
                 return progress / count;
             }
 
-            public float GetProloadProgress()
+            internal float GetProloadProgress()
             {
                 float count = this._managerDic.Count;
                 float progress = 0.0f;
