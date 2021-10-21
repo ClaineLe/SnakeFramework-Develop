@@ -1,9 +1,7 @@
-using UnityEditor;
+using com.snake.framework.runtime;
 using Newtonsoft.Json;
-using System.Data;
-using UnityEngine;
-using UnityEditorInternal;
 using Newtonsoft.Json.Linq;
+using UnityEditor;
 
 namespace com.snake.framework
 {
@@ -127,13 +125,13 @@ namespace com.snake.framework
                 System.IO.DirectoryInfo foldInfo = new System.IO.DirectoryInfo(repositoriePath);
                 if (foldInfo.Exists == false)
                 {
-                    Debug.LogError("目录不存在：" + foldInfo.FullName);
+                    SnakeDebuger.Error("目录不存在：" + foldInfo.FullName);
                     return;
                 }
                 Utility.Fold.ClearFold(repositoriePath, repoIgnores);
                 Utility.Fold.CopyFold(fullPath, repositoriePath, copyIgnores);
 
-                Debug.Log((debug ? "调试" : "发布") + unityPackageName);
+                SnakeDebuger.Log((debug ? "调试" : "发布") + unityPackageName);
             }
         }
     }
