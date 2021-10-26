@@ -54,11 +54,13 @@ namespace com.snake.framework
             public void SetupSplashUserInterface<T>() where T : ISplashUserInterface, new()
             {
                 this.mSplashUserInterface = new T();
+                this.mSplashUserInterface.Init();
             }
 
             public void SetupUpdateController<T>() where T : IUpdateController, new() 
             {
                 this.mUpdateController = new T();
+                this.mUpdateController.Init();
             }
 
             public T RegiestManager<T>(bool replace = false) where T : IManager
