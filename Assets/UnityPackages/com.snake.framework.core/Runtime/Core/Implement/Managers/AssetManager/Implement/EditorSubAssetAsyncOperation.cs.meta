@@ -1,0 +1,25 @@
+<<<<<<< HEAD:client/Assets/Scripts/Framework/Runtime/Managers/SnakeAssetManager/SnakeAssetManager/Implement/EditorSubAssetAsyncOperation.cs.meta
+fileFormatVersion: 2
+guid: 33bf0ee96b5100c4f99f0d706a132566
+MonoImporter:
+  externalObjects: {}
+  serializedVersion: 2
+  defaultReferences: []
+  executionOrder: 0
+  icon: {instanceID: 0}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+=======
+fileFormatVersion: 2
+guid: 8829b67200c767c40aec5b4e161f4ca2
+MonoImporter:
+  externalObjects: {}
+  serializedVersion: 2
+  defaultReferences: []
+  executionOrder: 0
+  icon: {instanceID: 0}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+>>>>>>> feature/【战斗模块】:client/Assets/Editor/GenAtlasPathLua.cs.meta
