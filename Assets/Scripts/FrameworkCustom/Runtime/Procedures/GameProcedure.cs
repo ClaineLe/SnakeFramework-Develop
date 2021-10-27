@@ -26,6 +26,8 @@ namespace com.snake.framework
                 _timerMgr.StartTimer(2.2f, () => {
                     Debug.LogError("StartFramer-1 -> " + (Time.realtimeSinceStartup - scrTime));
                 });
+
+                GameObject.Instantiate(Resources.Load<GameObject>("Cube"));
             }
 
             protected override void onTick(ProcedureManager owner, int frameCount, float time, float deltaTime, float unscaledTime, float realElapseSeconds)
