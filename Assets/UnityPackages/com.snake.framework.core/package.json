@@ -15,7 +15,9 @@
     "url": "https://github.com/ClaineLe/SnakeFramework"
   },
   "description": "client framework",
-  "dependencies": {},
+  "dependencies": {
+    "com.unity.scriptablebuildpipeline": "1.15.2"
+  },
   "publishConfig": {
     "registry": "https://package.openupm.com"
   }
