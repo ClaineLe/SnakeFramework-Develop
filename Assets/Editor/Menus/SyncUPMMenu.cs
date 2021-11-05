@@ -1,7 +1,9 @@
+using com.snake.framework.editor;
 using com.snake.framework.runtime;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using UnityEditor;
+using UnityEngine;
 
 namespace com.snake.framework
 {
@@ -10,6 +12,14 @@ namespace com.snake.framework
         public class SyncUPMMenu
         {
             private const string UPM_PATH_ROOT = "Assets/UnityPackages";
+           
+            [MenuItem("SnakeTools/BuilderEditorWindow")]
+            static public void ShowBuilderEditorWindow()
+            {
+                BuilderEditorWindow wnd = EditorWindow.GetWindow<BuilderEditorWindow>();
+                wnd.titleContent = new GUIContent("BuilderEditorWindow");
+            }
+
 
             [MenuItem("SnakeTools/Í¬²½Using")]
             static public void SyncSnakeFramework_Using()
