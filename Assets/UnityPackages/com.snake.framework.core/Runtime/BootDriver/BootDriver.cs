@@ -43,7 +43,7 @@ namespace com.snake.framework
                 System.Reflection.Assembly[] s_Assemblies = Utility.Assembly.GetAssemblies();
                 foreach (System.Reflection.Assembly assembly in s_Assemblies)
                 {
-                    if (assembly.GetName().Name.Equals("Assembly-CSharp"))
+                    if (assembly.GetName().Name.Equals(bootDriverSetting.FrameworkExtTypeAssemblyName))
                     {
                         type = assembly.GetType(bootDriverSetting.FrameworkExtTypeFullName);
                         break;
