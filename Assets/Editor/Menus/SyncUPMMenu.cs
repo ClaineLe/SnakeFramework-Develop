@@ -13,14 +13,6 @@ namespace com.snake.framework
         {
             private const string UPM_PATH_ROOT = "Assets/UnityPackages";
            
-            [MenuItem("SnakeTools/BuilderEditorWindow")]
-            static public void ShowBuilderEditorWindow()
-            {
-                BuilderEditorWindow wnd = EditorWindow.GetWindow<BuilderEditorWindow>();
-                wnd.titleContent = new GUIContent("BuilderEditorWindow");
-            }
-
-
             [MenuItem("SnakeTools/Í¬²½Using")]
             static public void SyncSnakeFramework_Using()
             {
