@@ -1,0 +1,153 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+             android:layout_width="match_parent"
+             android:layout_height="match_parent"
+             xmlns:app="http://schemas.android.com/apk/res-auto"
+             android:gravity="center">
+
+    <org.jar.bloc.widget.roundview.RoundLinearLayout
+            android:id="@+id/root"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            app:bloc_rv_cornerRadius="5dp"
+            app:bloc_rv_backgroundColor="#ffffff"
+            android:orientation="vertical">
+
+        <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:textSize="14sp"
+                android:textStyle="bold"
+                android:textColor="#4b525b"
+                android:paddingTop="20dp"
+                android:text="视频录制"/>
+
+        <FrameLayout
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1">
+
+            <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:orientation="vertical">
+
+                <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+
+                    <TextView
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:drawableLeft="@drawable/bloc_window_record_sound"
+                            android:layout_marginLeft="20dp"
+                            android:drawablePadding="5dp"
+                            android:textColor="#4b525b"
+                            android:textSize="12sp"
+                            android:text="麦克风"/>
+
+                    <org.jar.bloc.ui.widget.SwitchButton
+                            android:id="@+id/sound_switch"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginRight="20dp"
+                            app:blocThumbColor="#ffffff"
+                            app:blocTextOn="on"
+                            app:blocTextOff="off"
+                            app:blocAutoAdjustTextPosition="true"
+                            android:textColor="#00000000"
+                            app:blocThumbDrawable="@drawable/bloc_window_switch_thumb"
+                            app:blocBackDrawable="@drawable/bloc_window_switch_selector"/>
+                </LinearLayout>
+
+                <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center_vertical"
+                        android:layout_marginTop="20dp">
+
+                    <TextView
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:drawableLeft="@drawable/bloc_window_record_hd"
+                            android:layout_marginLeft="20dp"
+                            android:drawablePadding="5dp"
+                            android:textColor="#4b525b"
+                            android:textSize="12sp"
+                            android:text="高清录制"/>
+
+                    <org.jar.bloc.ui.widget.SwitchButton
+                            android:id="@+id/hd_switch"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginRight="20dp"
+                            app:blocThumbColor="#ffffff"
+                            app:blocTextOn="on"
+                            app:blocTextOff="off"
+                            app:blocAutoAdjustTextPosition="true"
+                            android:textColor="#00000000"
+                            app:blocThumbDrawable="@drawable/bloc_window_switch_thumb"
+                            app:blocBackDrawable="@drawable/bloc_window_switch_selector"/>
+                </LinearLayout>
+
+            </LinearLayout>
+
+        </FrameLayout>
+
+        <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="18dp">
+
+            <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="center_horizontal">
+
+                <TextView
+                        android:id="@+id/cancle"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="取消"
+                        android:gravity="center"
+                        android:paddingTop="5dp"
+                        android:paddingBottom="5dp"
+                        android:paddingLeft="35dp"
+                        android:paddingRight="35dp"
+                        android:textColor="#ffffff"
+                        android:textSize="14sp"
+                        android:background="@drawable/bloc_window_gray_btn"/>
+            </LinearLayout>
+
+            <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="center_horizontal">
+
+                <TextView
+                        android:id="@+id/sure"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="开始录制"
+                        android:gravity="center"
+                        android:paddingTop="5dp"
+                        android:paddingBottom="5dp"
+                        android:paddingLeft="20dp"
+                        android:paddingRight="20dp"
+                        android:textColor="#ffffff"
+                        android:textSize="14sp"
+                        android:background="@drawable/bloc_window_blue_btn"/>
+            </LinearLayout>
+
+        </LinearLayout>
+
+    </org.jar.bloc.widget.roundview.RoundLinearLayout>
+
+</FrameLayout>
+

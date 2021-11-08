@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="summary_color">#ff353535</color>
+    <color name="bloc_main_web_tool_color">#35383c</color>
+
+    <color name="title_bg">#FFFF5F62</color>
+    <color name="half_trans_bg">#55000000</color>
+    <color name="half_trans_bg_1">#45000000</color>
+    <color name="half_trans_bg_2">#35000000</color>
+    <color name="half_trans_bg_3">#25000000</color>
+    <color name="half_trans_bg_4">#15000000</color>
+    <color name="bloc_white">#ffffff</color>
+    <color name="red_light">#ff5f62</color>
+    <color name="red_point_bg">#FFFF0005</color>
+</resources>

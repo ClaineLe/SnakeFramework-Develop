@@ -1,0 +1,4 @@
+current release VERSION_CODE = 46;
+current release VERSION_NAME = "2.8.2";
+current release VERSION_DATE = "20190920";
+current release CONFIG_DESC = "v46-2.8.2-20190920-{WX}-{QQ}";

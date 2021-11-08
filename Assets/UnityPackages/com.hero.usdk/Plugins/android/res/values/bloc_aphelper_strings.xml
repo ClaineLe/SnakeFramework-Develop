@@ -1,0 +1,5 @@
+﻿<resources>
+    <string name="bloc_loading">Loading…</string>
+    <string name="bloc_load_failed">Loading failed, please click me to try again</string>
+    <string name="bloc_load_end">No more data</string>
+</resources>

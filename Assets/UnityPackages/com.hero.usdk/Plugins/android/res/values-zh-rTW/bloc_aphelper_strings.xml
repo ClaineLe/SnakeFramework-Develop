@@ -1,0 +1,5 @@
+﻿<resources>
+    <string name="bloc_loading">正在加載中…</string>
+    <string name="bloc_load_failed">加載失敗，請點我重試</string>
+    <string name="bloc_load_end">沒有更多數據</string>
+</resources>

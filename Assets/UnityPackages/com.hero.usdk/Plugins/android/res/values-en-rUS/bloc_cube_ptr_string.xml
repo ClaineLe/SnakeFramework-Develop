@@ -1,0 +1,15 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="cube_ptr_pull_down">Drop down</string>
+    <string name="bloc_cube_ptr_pull_down_to_refresh">Pull down to refresh</string>
+    <string name="bloc_cube_ptr_release_to_refresh">Release the refresh</string>
+    <string name="bloc_cube_ptr_refreshing">Loading...</string>
+    <string name="bloc_cube_ptr_refresh_complete">Update completed</string>
+
+    <string name="bloc_cube_ptr_last_update">Last updated:&#160;</string>
+    <string name="bloc_cube_ptr_seconds_ago">&#160;seconds ago</string>
+    <string name="bloc_cube_ptr_minutes_ago">&#160;minutes ago</string>
+    <string name="bloc_cube_ptr_hours_ago">&#160;hours ago</string>
+
+</resources>

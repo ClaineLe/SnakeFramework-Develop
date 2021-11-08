@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="#202020"
+                android:orientation="vertical">
+
+    <org.jar.photo.zoom.PreviewViewPager
+            android:id="@+id/vp_preview"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+    </org.jar.photo.zoom.PreviewViewPager>
+
+    <LinearLayout
+            android:id="@+id/ll_photo_operation"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_vertical"
+            android:background="#55000000">
+
+        <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:gravity="center_vertical"
+                android:layout_weight="1">
+
+            <ImageView
+                    android:id="@+id/tv_photo_back"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:paddingLeft="15dp"
+                    android:paddingRight="5dp"
+                    android:src="@drawable/bloc_light_webtool_back_select"/>
+
+            <TextView
+                    android:id="@+id/tv_photo_scan"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginRight="10dp"
+                    android:gravity="left"
+                    android:clickable="true"
+                    android:textSize="14sp"
+                    android:textColor="#ffffff"
+                    android:maxLines="1"
+                    android:ellipsize="end"
+                    android:text="@string/photo_back"/>
+        </LinearLayout>
+
+        <LinearLayout
+                android:id="@+id/rl_check"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@android:color/transparent"
+                android:visibility="visible"
+                android:padding="7dp">
+
+            <TextView
+                    android:id="@+id/ctv_check"
+                    android:layout_width="@dimen/photo_select_preview"
+                    android:layout_height="@dimen/photo_select_preview"
+                    android:layout_marginRight="1dp"
+                    android:background="@drawable/bloc_photo_oval_selector"
+                    android:enabled="false"
+                    android:clickable="false"
+                    android:gravity="center"
+                    android:visibility="visible"/>
+
+            <TextView
+                    android:id="@+id/tv_check"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginRight="6dp"
+                    android:gravity="center"
+                    android:padding="4dp"
+                    android:text="@string/photo_to_choose"
+                    android:textSize="14sp"
+                    android:clickable="false"
+                    android:textColor="#ffffff"/>
+        </LinearLayout>
+    </LinearLayout>
+
+    <LinearLayout
+            android:id="@+id/ll_photo_bottom_operation"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="#55000000"
+            android:layout_gravity="bottom"
+            android:padding="7dp"
+            android:gravity="right">
+
+        <TextView
+                android:id="@+id/tv_photo_ok"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/bloc_white"
+                android:gravity="center"
+                android:clickable="true"
+                android:paddingTop="5dp"
+                android:paddingBottom="5dp"
+                android:paddingRight="10dp"
+                android:paddingLeft="10dp"
+                android:textSize="14sp"
+                android:layout_marginRight="10dp"
+                android:background="@drawable/bloc_comment_send_btn"
+                android:text="@string/photo_ok"/>
+    </LinearLayout>
+
+</FrameLayout>

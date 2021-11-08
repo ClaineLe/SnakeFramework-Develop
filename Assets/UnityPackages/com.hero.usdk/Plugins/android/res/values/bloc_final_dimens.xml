@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--存放数值资源的xml-->
+<resources>
+    <!--间距大小-->
+    <dimen name="bloc_size_200_px">100dp</dimen>
+    <dimen name="bloc_size_180_px">90dp</dimen>
+    <dimen name="bloc_size_100_px">50dp</dimen>
+    <dimen name="bloc_size_80_px">40dp</dimen>
+    <dimen name="bloc_size_70_px">35dp</dimen>
+    <dimen name="bloc_size_60_px">30dp</dimen>
+    <dimen name="bloc_size_50_px">25dp</dimen>
+    <dimen name="bloc_size_49_px">24.5dp</dimen>
+    <dimen name="bloc_size_46_px">23dp</dimen>
+    <dimen name="bloc_size_40_px">20dp</dimen>
+    <dimen name="bloc_size_39_px">19.5dp</dimen>
+    <dimen name="bloc_size_36_px">18dp</dimen>
+    <dimen name="bloc_size_35_px">17.5dp</dimen>
+    <dimen name="bloc_size_33_px">16.5dp</dimen>
+    <dimen name="bloc_size_32_px">16dp</dimen>
+    <dimen name="bloc_size_30_px">15dp</dimen>
+    <dimen name="bloc_size_29_px">14.5dp</dimen>
+    <dimen name="bloc_size_28_px">14dp</dimen>
+    <dimen name="bloc_size_27_px">13.5dp</dimen>
+    <dimen name="bloc_size_26_px">13dp</dimen>
+    <dimen name="bloc_size_25_px">12.5dp</dimen>
+    <dimen name="bloc_size_24_px">12dp</dimen>
+    <dimen name="bloc_size_23_px">11.5dp</dimen>
+    <dimen name="bloc_size_20_px">10dp</dimen>
+    <dimen name="bloc_size_19_px">9.5dp</dimen>
+    <dimen name="bloc_size_18_px">9dp</dimen>
+    <dimen name="bloc_size_16_px">8dp</dimen>
+    <dimen name="bloc_size_15_px">7.5dp</dimen>
+    <dimen name="bloc_size_14_px">7dp</dimen>
+    <dimen name="bloc_size_12_px">6dp</dimen>
+    <dimen name="bloc_size_10_px">5dp</dimen>
+    <dimen name="bloc_size_9_px">4.5dp</dimen>
+    <dimen name="bloc_size_8_px">4dp</dimen>
+    <dimen name="bloc_size_6_px">3dp</dimen>
+    <dimen name="bloc_size_4_px">2dp</dimen>
+
+    <!--字体大小-->
+    <dimen name="bloc_font_52_px">28sp</dimen>
+    <dimen name="bloc_font_48_px">24sp</dimen>
+    <dimen name="bloc_font_44_px">22sp</dimen>
+    <dimen name="bloc_font_42_px">21sp</dimen>
+    <dimen name="bloc_font_40_px">20sp</dimen>
+    <dimen name="bloc_font_38_px">19sp</dimen>
+    <dimen name="bloc_font_36_px">18sp</dimen>
+    <dimen name="bloc_font_32_px">17sp</dimen>
+    <dimen name="bloc_font_30_px">16sp</dimen>
+    <dimen name="bloc_font_28_px">14sp</dimen>
+    <dimen name="bloc_font_26_px">14sp</dimen>
+    <dimen name="bloc_font_24_px">12sp</dimen>
+    <dimen name="bloc_font_22_px">11sp</dimen>
+    <dimen name="bloc_font_20_px">10sp</dimen>
+    <dimen name="bloc_font_18_px">9sp</dimen>
+    <dimen name="bloc_font_16_px">8sp</dimen>
+    <dimen name="bloc_font_14_px">7sp</dimen>
+
+</resources>

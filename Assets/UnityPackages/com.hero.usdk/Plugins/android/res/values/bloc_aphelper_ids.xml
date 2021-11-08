@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <item name="bloc_viewholder_support" type="id"/>
+    <item name="bloc_swiping_support" type="id"/>
+    <item name="bloc_dragging_support" type="id"/>
+    <item name="bloc_databinding_support" type="id"/>
+</resources>

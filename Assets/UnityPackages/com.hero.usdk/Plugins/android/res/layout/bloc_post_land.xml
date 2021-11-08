@@ -1,0 +1,245 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+             android:layout_width="match_parent"
+             android:layout_height="match_parent"
+             android:background="#ffffff">
+
+    <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="horizontal">
+
+        <RelativeLayout
+                android:id="@+id/uc_sdk_webviewtool_root_left"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:background="@color/bloc_main_web_tool_color"
+                android:gravity="center_vertical"
+                android:orientation="horizontal"
+                android:visibility="gone">
+
+            <ImageView
+                    android:padding="15dp"
+                    android:id="@+id/uc_sdk_webviewtool_close_left"
+                    style="@style/bloc_tool_buttom_image"
+                    android:layout_alignParentBottom="true"
+                    android:src="@drawable/bloc_light_webtool_close_select"/>
+
+            <ImageView
+                    android:id="@+id/uc_sdk_webviewtool_share_left"
+                    style="@style/bloc_tool_buttom_image"
+                    android:layout_toLeftOf="@+id/uc_sdk_webviewtool_close_left"
+                    android:src="@drawable/bloc_webtool_share_select"
+                    android:visibility="gone"/>
+
+            <ImageView
+                    android:visibility="gone"
+                    android:padding="15dp"
+                    android:id="@+id/uc_sdk_webviewtool_refresh_left"
+                    style="@style/bloc_tool_buttom_image"
+                    android:layout_marginRight="@dimen/bloc_pull_new_imageview_margin"
+                    android:layout_above="@+id/uc_sdk_webviewtool_close_left"
+                    android:src="@drawable/bloc_dark_webtool_refresh_select"/>
+
+            <ImageView
+                    android:padding="15dp"
+                    android:layout_alignParentTop="true"
+                    android:id="@+id/uc_sdk_webviewtool_back_left"
+                    style="@style/bloc_tool_buttom_image"
+                    android:src="@drawable/bloc_light_webtool_back_select"/>
+
+            <ImageView
+                    android:visibility="gone"
+                    android:padding="15dp"
+                    android:id="@+id/uc_sdk_webviewtool_forward_left"
+                    style="@style/bloc_tool_buttom_image"
+                    android:layout_below="@+id/uc_sdk_webviewtool_back_left"
+                    android:src="@drawable/bloc_dark_webtool_forward_select"/>
+        </RelativeLayout>
+
+        <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical">
+
+            <EditText
+                    android:id="@+id/post_title"
+                    android:layout_width="match_parent"
+                    android:layout_height="44dp"
+                    android:background="@android:color/transparent"
+                    android:gravity="center_vertical"
+                    android:paddingLeft="10dp"
+                    android:paddingRight="10dp"
+                    android:maxLines="1"
+                    android:maxLength="30"
+                    android:hint="标题(选填，0-30字)"
+                    android:textColorHint="#8c9196"
+                    android:textColor="#333333"
+                    android:textSize="12dp"/>
+
+            <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1px"
+                    android:background="#44000000"/>
+
+            <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:layout_weight="1"
+                    android:background="#ffffff">
+
+                <EditText
+                        android:id="@+id/post_content"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:background="@android:color/transparent"
+                        android:gravity="top|left"
+                        android:padding="10dp"
+                        android:hint="输入你想说的…"
+                        android:textColorHint="#8c9196"
+                        android:textColor="#333333"
+                        android:textSize="12dp"/>
+
+            </LinearLayout>
+
+            <org.jar.support.v7.widget.RecyclerView
+                    android:id="@+id/post_images"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"/>
+
+            <!-- NOTE RECORD -->
+
+            <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1px"
+                    android:background="#44000000"/>
+
+            <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="44dp"
+                    android:padding="5dp"
+                    android:orientation="horizontal"
+                    android:gravity="center_vertical">
+
+                <ImageView
+                        android:id="@+id/post_emoji"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:paddingLeft="5dp"
+                        android:paddingRight="10dp"
+                        android:src="@drawable/post_select_emoji"/>
+
+                <ImageView
+                        android:id="@+id/post_image"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:paddingLeft="10dp"
+                        android:paddingRight="10dp"
+                        android:src="@drawable/post_select_image"/>
+
+                <!-- NOTE RECORD -->
+
+                <LinearLayout
+                        android:id="@+id/post_classify_root"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="10dp"
+                        android:clickable="true"
+                        android:background="@drawable/bloc_post_location_bg"
+                        android:gravity="center_vertical"
+                        android:orientation="horizontal">
+
+                    <!--<ImageView
+                            android:id="@+id/post_location_icon"
+                            android:layout_width="wrap_content"
+                            android:layout_height="match_parent"
+                            android:paddingLeft="8dp"
+                            android:src="@drawable/post_location_icon"/>-->
+
+                    <TextView
+                            android:id="@+id/post_classify"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:textColor="#68a2fd"
+                            android:textSize="10dp"
+                            android:paddingLeft="12dp"
+                            android:paddingTop="5dp"
+                            android:paddingBottom="5dp"
+                            android:text="综合交流"/>
+
+                    <ImageView
+                            android:id="@+id/post_classify_arrow"
+                            android:layout_width="wrap_content"
+                            android:layout_height="match_parent"
+                            android:paddingLeft="5dp"
+                            android:paddingRight="8dp"
+                            android:src="@drawable/post_classify"/>
+
+                </LinearLayout>
+
+                <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:gravity="right|center_vertical">
+
+                    <TextView
+                            android:id="@+id/post_cancle"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:textColor="#6e7b8c"
+                            android:gravity="center"
+                            android:clickable="true"
+                            android:paddingTop="5dp"
+                            android:paddingBottom="5dp"
+                            android:paddingRight="15dp"
+                            android:paddingLeft="15dp"
+                            android:textSize="14dp"
+                            android:layout_marginRight="10dp"
+                            android:background="@drawable/bloc_comment_cancle_btn"
+                            android:text="@string/photo_cancle"/>
+
+                    <TextView
+                            android:id="@+id/post_send"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:textColor="@color/bloc_white"
+                            android:gravity="center"
+                            android:clickable="true"
+                            android:paddingTop="5dp"
+                            android:paddingBottom="5dp"
+                            android:paddingRight="15dp"
+                            android:paddingLeft="15dp"
+                            android:textSize="14dp"
+                            android:layout_marginRight="10dp"
+                            android:background="@drawable/bloc_window_blue_btn"
+                            android:text="发帖"/>
+                </LinearLayout>
+
+            </LinearLayout>
+
+            <org.jar.bloc.ui.widget.FaceLayout
+                    android:id="@+id/post_face_layout"
+                    android:layout_width="match_parent"
+                    android:layout_height="70dp"
+                    android:visibility="gone"/>
+        </LinearLayout>
+    </LinearLayout>
+
+    <TextView
+            android:id="@+id/post_rotate"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="right|top"
+            android:layout_margin="15dp"
+            android:paddingLeft="12dp"
+            android:paddingRight="12dp"
+            android:paddingTop="6dp"
+            android:paddingBottom="6dp"
+            android:drawableTop="@drawable/post_land_icon"
+            android:textColor="#68a2fd"
+            android:textSize="10sp"
+            android:background="@drawable/bloc_post_rotate_bg"
+            android:text="竖屏"
+            android:visibility="invisible"/>
+
+</FrameLayout>

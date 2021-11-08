@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <drawable name="bloc_ops_drawable">#00000000</drawable>
+    <color name="bloc_ops_color">#00000000</color>
+    <style name="bloc_ops_style"/>
+</resources>

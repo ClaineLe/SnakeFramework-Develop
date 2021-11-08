@@ -1,7 +1,7 @@
-﻿{
+{
   "name": "com.snake.framework.core",
   "displayName": "SnakeFramework-Core",
-  "version": "0.0.9.0",
+  "version": "0.2.10",
   "unity": "2019.4",
   "license": "MIT",
   "keywords": [
@@ -15,7 +15,9 @@
     "url": "https://github.com/ClaineLe/SnakeFramework"
   },
   "description": "client framework",
-  "dependencies": {},
+  "dependencies": {
+    "com.unity.scriptablebuildpipeline": "1.15.2"
+  },
   "publishConfig": {
     "registry": "https://package.openupm.com"
   }
