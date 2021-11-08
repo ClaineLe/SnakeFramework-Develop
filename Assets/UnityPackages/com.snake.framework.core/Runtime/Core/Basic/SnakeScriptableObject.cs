@@ -17,6 +17,19 @@ namespace com.snake.framework
                 }
                 return setting;
             }
+
+#if UNITY_EDITOR
+            static protected T editorGet(string editorPath) 
+            {
+                T setting = UnityEditor.AssetDatabase.LoadAssetAtPath<T>(editorPath);
+                if (setting == null)
+                {
+                    SnakeDebuger.ErrorFormat("没有找到路径{0}，请右键创建一个", editorPath);
+                    return null;
+                }
+                return setting;
+            }
+#endif
         }
     }
 }

@@ -14,7 +14,8 @@ namespace com.snake.framework
         {
             private Vector2 _assetRuleViewScrollPosition;
             private List<AssetRuleDraw> assetRuleDrawList;
-            private EnvironmentSetting _setting;
+            private EnvironmentSetting _envSetting;
+            private BuilderSetting _builderSetting;
 
             private DefaultAsset _foldDefAsset;
             private string tmpRename;
@@ -28,13 +29,14 @@ namespace com.snake.framework
             private void loadAssetRule()
             {
                 assetRuleDrawList.Clear();
-                _setting = EnvironmentSetting.Get();
-                if (string.IsNullOrEmpty(_setting.mAssetRulesPath))
+                _envSetting = EnvironmentSetting.Get();
+                _builderSetting = BuilderSetting.EditorGet();
+                if (string.IsNullOrEmpty(_builderSetting.mAssetRulesPath))
                 {
                     SnakeDebuger.Error("未在EnvironmentSetting.asset中配置，资源规则路径.");
                     return;
                 }
-                string[] files = Directory.GetFiles(_setting.mAssetRulesPath, "*.asset");
+                string[] files = Directory.GetFiles(_builderSetting.mAssetRulesPath, "*.asset");
 
                 string tmpPath = string.Empty;
                 Dictionary<string, string> tmpDict = new Dictionary<string, string>();
@@ -78,8 +80,8 @@ namespace com.snake.framework
             /// </summary>
             private void OnGUIWithAssetRoleView()
             {
-                GUILayout.Label("规则目录：" + this._setting.mAssetRulesPath);
-                GUILayout.Label("资源目录：" + this._setting.mResRootPath);
+                GUILayout.Label("规则目录：" + this._builderSetting.mAssetRulesPath);
+                GUILayout.Label("资源目录：" + this._envSetting.mResRootPath);
                 GUILayout.Label("打包平台：" + EditorUserBuildSettings.activeBuildTarget);
 
                 using (EditorGUILayout.ScrollViewScope svs = new EditorGUILayout.ScrollViewScope(_assetRuleViewScrollPosition, GUILayout.MaxWidth(360)))
@@ -87,7 +89,7 @@ namespace com.snake.framework
                     _assetRuleViewScrollPosition = svs.scrollPosition;
                     if (GUILayout.Button("新增"))
                     {
-                        string savePath = Path.Combine(this._setting.mAssetRulesPath, "TmpAssetRule.asset");
+                        string savePath = Path.Combine(this._builderSetting.mAssetRulesPath, "TmpAssetRule.asset");
                         if (AssetDatabase.LoadAssetAtPath<AssetRule>(savePath) != null)
                         {
                             SnakeDebuger.Error("创建失败，已存在资源规则配置文件:TmpAssetRule.asset,请先删除或对文件进行重命名");
@@ -175,9 +177,9 @@ namespace com.snake.framework
                                                 if (ccs.changed)
                                                 {
                                                     string resPath = AssetDatabase.GetAssetPath(_foldDefAsset);
-                                                    if (resPath.StartsWith(_setting.mResRootPath) == false)
+                                                    if (resPath.StartsWith(_envSetting.mResRootPath) == false)
                                                     {
-                                                        SnakeDebuger.Error("资源根目录必须为：" + _setting.mResRootPath);
+                                                        SnakeDebuger.Error("资源根目录必须为：" + _envSetting.mResRootPath);
                                                         return;
                                                     }
                                                     assetRuleDraw.mAssetRule.foldPath = resPath;

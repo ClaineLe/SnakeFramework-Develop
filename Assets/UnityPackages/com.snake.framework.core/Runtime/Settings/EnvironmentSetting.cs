@@ -7,14 +7,11 @@ namespace com.snake.framework
         [UnityEngine.CreateAssetMenu(fileName = "EnvironmentSetting")]
         public class EnvironmentSetting : SnakeBasicSetting<EnvironmentSetting>
         {
-
             [Header("资源根目录路径")]
             public string mResRootPath;
 
-#if UNITY_EDITOR
-            [Header("资源打包规整路径")]
-            public string mAssetRulesPath;
-#endif
+            [Header("构建配置路径")]
+            public string mBuilderSettingPath;
         }
     }
 }

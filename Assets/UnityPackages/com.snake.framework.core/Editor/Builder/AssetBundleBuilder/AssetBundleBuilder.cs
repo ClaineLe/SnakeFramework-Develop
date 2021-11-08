@@ -90,13 +90,13 @@ namespace com.snake.framework
             static private Dictionary<string, string> generateAssetMap()
             {
                 var assetMapDict = new Dictionary<string, string>();
-                EnvironmentSetting environmentSetting = EnvironmentSetting.Get();
-                if (string.IsNullOrEmpty(environmentSetting.mAssetRulesPath))
+                BuilderSetting builderSetting = BuilderSetting.EditorGet();
+                if (string.IsNullOrEmpty(builderSetting.mAssetRulesPath))
                 {
                     SnakeDebuger.Error("未在EnvironmentSetting.asset中配置，资源规则路径.");
                     return null;
                 }
-                string[] files = Directory.GetFiles(environmentSetting.mAssetRulesPath, "*.asset");
+                string[] files = Directory.GetFiles(builderSetting.mAssetRulesPath, "*.asset");
 
                 string tmpPath = string.Empty;
                 Dictionary<string, string> tmpDict = new Dictionary<string, string>();
