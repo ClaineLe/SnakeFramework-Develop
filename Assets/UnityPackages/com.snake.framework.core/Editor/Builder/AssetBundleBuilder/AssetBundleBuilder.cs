@@ -42,7 +42,7 @@ namespace com.snake.framework
                 if (exitCode < ReturnCode.Success)
                 {
                     SnakeDebuger.Error("构建资源包错误. code:" + exitCode);
-                    callback.Invoke(null);
+                    callback?.Invoke(null);
                     return;
                 }
 
