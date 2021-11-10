@@ -1,6 +1,0 @@
-<resources version="1.0" encoding="utf-8">
-    <!-->网页操作栏的宽度<-->
-    <dimen name="bloc_webtool_height">50dp</dimen>
-    <!-->网页操作栏按钮之间的间距<-->
-    <dimen name="bloc_webtool_button_public_margin">5dp</dimen>
-</resources>

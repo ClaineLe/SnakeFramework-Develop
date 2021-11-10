@@ -1,6 +1,0 @@
-framework module HeroBaseSDK {
-  umbrella header "HeroBaseSDK.h"
-
-  export *
-  module * { export * }
-}

@@ -1,6 +1,0 @@
-framework module HeroUSDK {
-  umbrella header "HeroUSDK.h"
-
-  export *
-  module * { export * }
-}
