@@ -12,3 +12,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 18ce31d7a033f94448fe1a28d806e314, type: 3}
   m_Name: EnvironmentSetting
   m_EditorClassIdentifier: 
+  mResRootPath: Assets/ResExport
+  mBuilderSettingPath: Assets/Editor/BuilderSetting.asset
