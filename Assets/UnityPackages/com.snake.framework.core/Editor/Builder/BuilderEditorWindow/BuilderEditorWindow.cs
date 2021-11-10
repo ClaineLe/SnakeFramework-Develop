@@ -194,8 +194,11 @@ namespace com.snake.framework
                                                     string resPath = AssetDatabase.GetAssetPath(_foldDefAsset);
                                                     if (resPath.StartsWith(_envSetting.mResRootPath) == false)
                                                     {
-                                                        SnakeDebuger.Error("资源根目录必须为：" + _envSetting.mResRootPath);
-                                                        return;
+                                                        if (resPath.StartsWith("Packages") == false)
+                                                        {
+                                                            SnakeDebuger.Error("资源根目录必须为：" + _envSetting.mResRootPath);
+                                                            return;
+                                                        }
                                                     }
                                                     assetRuleDraw.mAssetRule.foldPath = resPath;
                                                 }
