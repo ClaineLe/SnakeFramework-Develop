@@ -64,13 +64,27 @@ namespace com.snake.framework
 
                 if (assetRule.packerMode == PACKER_MODE.childfold)
                 {
-                    for (int i = 0; i < assetRule.types.Length; i++)
-                        fileInfoList.AddRange(dirInfo.GetDirectories(assetRule.types[i], SearchOption.AllDirectories));
+                    if (assetRule.types == null || assetRule.types.Length == 0)
+                    {
+                        fileInfoList.AddRange(dirInfo.GetDirectories("*", SearchOption.AllDirectories));
+                    }
+                    else 
+                    {
+                        for (int i = 0; i < assetRule.types.Length; i++)
+                            fileInfoList.AddRange(dirInfo.GetDirectories(assetRule.types[i], SearchOption.AllDirectories));
+                    }
                 }
                 else 
                 {
-                    for (int i = 0; i < assetRule.types.Length; i++)
-                        fileInfoList.AddRange(dirInfo.GetFiles(assetRule.types[i], SearchOption.AllDirectories));
+                    if (assetRule.types == null || assetRule.types.Length == 0)
+                    {
+                        fileInfoList.AddRange(dirInfo.GetFiles("*.*", SearchOption.AllDirectories));
+                    }
+                    else 
+                    {
+                        for (int i = 0; i < assetRule.types.Length; i++)
+                            fileInfoList.AddRange(dirInfo.GetFiles(assetRule.types[i], SearchOption.AllDirectories));
+                    }
                 }
 
                 //过滤
