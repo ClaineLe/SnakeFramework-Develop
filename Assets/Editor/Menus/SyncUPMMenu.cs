@@ -3,6 +3,7 @@ using com.snake.framework.runtime;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using UnityEditor;
+using UnityEditor.Build.Pipeline;
 using UnityEngine;
 
 namespace com.snake.framework
@@ -12,7 +13,17 @@ namespace com.snake.framework
         public class SyncUPMMenu
         {
             private const string UPM_PATH_ROOT = "Assets/UnityPackages";
-           
+
+            [MenuItem("SnakeTools/资源构建(Android)")]
+            static public void Build_AssetBundle_for_Android()
+            {
+                BuildTarget buildTarget = BuildTarget.Android;
+                BuildTargetGroup buildTargetGroup = BuildTargetGroup.Android;
+                string outputPath = "AssetBundle";
+                BundleBuildParameters parameters = new BundleBuildParameters(buildTarget, buildTargetGroup, outputPath);
+                AssetBundleBuilder.BuildAssetBundle(parameters, null);
+            }
+
             [MenuItem("SnakeTools/同步Using")]
             static public void SyncSnakeFramework_Using()
             {
