@@ -211,7 +211,8 @@ namespace com.snake.framework
                                             assetRuleDraw.modifyFoldPath = !assetRuleDraw.modifyFoldPath;
                                         }
                                     }
-                                    EditorGUILayout.PropertyField(assetRuleDraw.mSerializedObject.FindProperty("single"), new GUIContent("独立打包"));
+                                    assetRuleDraw.mAssetRule.single = EditorGUILayout.Toggle("独立打包", assetRuleDraw.mAssetRule.single);
+
                                     using (new EditorGUILayout.HorizontalScope())
                                     {
                                         using (new EditorGUILayout.VerticalScope("HelpBox"))
