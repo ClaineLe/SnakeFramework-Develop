@@ -54,16 +54,24 @@ namespace com.snake.framework
                 generateAssetBundleCatalog(builds, results.BundleInfos, ref assetBundleCatalog);
                 callback?.Invoke(assetBundleCatalog);
             }
+
             static private Dictionary<string, string> genAssetMap(AssetRule assetRule)
             {
                 Dictionary<string, string> assetMap = new Dictionary<string, string>();
 
                 DirectoryInfo dirInfo = new DirectoryInfo(assetRule.foldPath);
-                List<FileInfo> fileInfoList = new List<FileInfo>();
+                List<FileSystemInfo> fileInfoList = new List<FileSystemInfo>();
 
-                //收集
-                for (int i = 0; i < assetRule.types.Length; i++)
-                    fileInfoList.AddRange(dirInfo.GetFiles(assetRule.types[i], SearchOption.AllDirectories));
+                if (assetRule.packerMode == PACKER_MODE.childfold)
+                {
+                    for (int i = 0; i < assetRule.types.Length; i++)
+                        fileInfoList.AddRange(dirInfo.GetDirectories(assetRule.types[i], SearchOption.AllDirectories));
+                }
+                else 
+                {
+                    for (int i = 0; i < assetRule.types.Length; i++)
+                        fileInfoList.AddRange(dirInfo.GetFiles(assetRule.types[i], SearchOption.AllDirectories));
+                }
 
                 //过滤
                 foreach (string filterStr in assetRule.filters)
@@ -74,19 +82,19 @@ namespace com.snake.framework
 
                 for (var i = 0; i < fileInfoList.Count; i++)
                 {
-                    FileInfo item = fileInfoList[i];
+                    FileSystemInfo item = fileInfoList[i];
                     string fileFullPath = item.FullName.Replace("\\", "/").Replace(Application.dataPath, "Assets");
-                    if (assetRule.single)
+                    if (assetRule.packerMode == PACKER_MODE.single)
                     {
                         bundleName = item.FullName.Replace("\\", "/").Replace(Application.dataPath + "/ResExport/", string.Empty);
                         bundleName = Path.Combine(Path.GetDirectoryName(bundleName), Path.GetFileNameWithoutExtension(bundleName)).Replace("\\", "/");
                         bundleName = bundleName.Replace("/", "_").Replace(".", "_").ToLower();
                     }
-
                     assetMap.Add(fileFullPath, bundleName);
                 }
                 return assetMap;
             }
+
             static private Dictionary<string, string> generateAssetMap()
             {
                 var assetMapDict = new Dictionary<string, string>();

@@ -211,7 +211,7 @@ namespace com.snake.framework
                                             assetRuleDraw.modifyFoldPath = !assetRuleDraw.modifyFoldPath;
                                         }
                                     }
-                                    assetRuleDraw.mAssetRule.single = EditorGUILayout.Toggle("独立打包", assetRuleDraw.mAssetRule.single);
+                                    assetRuleDraw.mAssetRule.packerMode = (PACKER_MODE)EditorGUILayout.EnumPopup("模式", assetRuleDraw.mAssetRule.packerMode);
 
                                     using (new EditorGUILayout.HorizontalScope())
                                     {
