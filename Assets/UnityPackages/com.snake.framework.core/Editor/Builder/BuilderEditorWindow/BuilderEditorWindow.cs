@@ -212,6 +212,13 @@ namespace com.snake.framework
                                         if (GUILayout.Button(assetRuleDraw.modifyFoldPath ? "确定" : "修改", GUILayout.Width(60)))
                                         {
                                             assetRuleDraw.modifyFoldPath = !assetRuleDraw.modifyFoldPath;
+
+                                            if (assetRuleDraw.modifyFoldPath == false)
+                                            {
+                                                EditorUtility.SetDirty(assetRuleDraw.mAssetRule);
+                                                AssetDatabase.SaveAssets();
+                                                AssetDatabase.Refresh();
+                                            }
                                         }
                                     }
                                     assetRuleDraw.mAssetRule.packerMode = (PACKER_MODE)EditorGUILayout.EnumPopup("模式", assetRuleDraw.mAssetRule.packerMode);
