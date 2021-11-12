@@ -55,7 +55,7 @@ namespace com.snake.framework
                 callback?.Invoke(assetBundleCatalog);
             }
 
-            static private Dictionary<string, string> genAssetMap(AssetRule assetRule)
+            static private Dictionary<string, string> genAssetMap(AssetRule assetRule, SearchOption searchOpt = SearchOption.AllDirectories)
             {
                 Dictionary<string, string> assetMap = new Dictionary<string, string>();
 
@@ -73,17 +73,33 @@ namespace com.snake.framework
                         for (int i = 0; i < assetRule.types.Length; i++)
                             fileInfoList.AddRange(dirInfo.GetDirectories(assetRule.types[i], SearchOption.AllDirectories));
                     }
+
+                    foreach (var a in fileInfoList)
+                    {
+                        AssetRule childAssetRule = ScriptableObject.CreateInstance<AssetRule>();
+                        childAssetRule.foldPath = a.FullName;
+                        childAssetRule.packerMode = PACKER_MODE.together;
+                        childAssetRule.types = assetRule.types;
+                        childAssetRule.filters = assetRule.filters;
+                        Dictionary<string, string> tmpDict = genAssetMap(childAssetRule, SearchOption.TopDirectoryOnly);
+                        foreach (var b in tmpDict)
+                        {
+                            assetMap.Add(b.Key, b.Value);
+                        }
+                    }
+
+                    return assetMap;
                 }
                 else 
                 {
                     if (assetRule.types == null || assetRule.types.Length == 0)
                     {
-                        fileInfoList.AddRange(dirInfo.GetFiles("*.*", SearchOption.AllDirectories));
+                        fileInfoList.AddRange(dirInfo.GetFiles("*.*", searchOpt));
                     }
                     else 
                     {
                         for (int i = 0; i < assetRule.types.Length; i++)
-                            fileInfoList.AddRange(dirInfo.GetFiles(assetRule.types[i], SearchOption.AllDirectories));
+                            fileInfoList.AddRange(dirInfo.GetFiles(assetRule.types[i], searchOpt));
                     }
                 }
 
@@ -91,22 +107,48 @@ namespace com.snake.framework
                 foreach (string filterStr in assetRule.filters)
                     fileInfoList.RemoveAll(a => a.FullName.Contains(filterStr));
 
-                string bundleName = dirInfo.FullName.Replace("\\", "/").Replace(Application.dataPath + "/ResExport/", string.Empty)
-                  .Replace("/", "_").Replace(".", "_").ToLower();
-
+                string bundleName = GetFixPathString(dirInfo.FullName).Replace("/", "_").Replace(".", "_").ToLower();
                 for (var i = 0; i < fileInfoList.Count; i++)
                 {
                     FileSystemInfo item = fileInfoList[i];
-                    string fileFullPath = item.FullName.Replace("\\", "/").Replace(Application.dataPath, "Assets");
+                    string fileFullPath = item.FullName;
+                    if (fileFullPath.Contains("\\Packages\\"))
+                    {
+                        var index = fileFullPath.IndexOf("Packages\\");
+                        fileFullPath = fileFullPath.Substring(index);
+                        fileFullPath = fileFullPath.Replace("\\", "/");
+                    }
+                    else
+                    {
+                        fileFullPath = fileFullPath.Replace("\\", "/").Replace(Application.dataPath, "Assets");
+                    }
+
                     if (assetRule.packerMode == PACKER_MODE.single)
                     {
-                        bundleName = item.FullName.Replace("\\", "/").Replace(Application.dataPath + "/ResExport/", string.Empty);
+                        bundleName = GetFixPathString(item.FullName);
                         bundleName = Path.Combine(Path.GetDirectoryName(bundleName), Path.GetFileNameWithoutExtension(bundleName)).Replace("\\", "/");
                         bundleName = bundleName.Replace("/", "_").Replace(".", "_").ToLower();
                     }
                     assetMap.Add(fileFullPath, bundleName);
                 }
                 return assetMap;
+            }
+
+            static private string GetFixPathString(string fullName)
+            {
+                var resultStr = "";
+                if (fullName.Contains("\\Packages\\"))
+                {
+                    var index = fullName.IndexOf("Packages\\");
+                    resultStr = fullName.Substring(index);
+                    resultStr = resultStr.Replace("\\", "/");
+                }
+                else
+                {
+                    resultStr = fullName.Replace("\\", "/").Replace(Application.dataPath + "/ResExport/", string.Empty);
+                }
+
+                return resultStr;
             }
 
             static private Dictionary<string, string> generateAssetMap()
@@ -119,9 +161,9 @@ namespace com.snake.framework
                     return null;
                 }
                 string[] files = Directory.GetFiles(builderSetting.mAssetRulesPath, "*.asset");
+                List<AssetRule> ruleList = new List<AssetRule>();
 
                 string tmpPath = string.Empty;
-                Dictionary<string, string> tmpDict = new Dictionary<string, string>();
                 for (int i = 0; i < files.Length; i++)
                 {
                     tmpPath = files[i].Replace("\\", "/");
@@ -132,6 +174,14 @@ namespace com.snake.framework
                         continue;
                     }
 
+                    ruleList.Add(assetRule);
+                }
+
+                ruleList.Sort((a, b) => a.priority.CompareTo(b.priority));
+                Dictionary<string, string> tmpDict = new Dictionary<string, string>();
+                for (int i = 0; i < ruleList.Count; i++)
+                {
+                    var assetRule = ruleList[i];
                     tmpDict = genAssetMap(assetRule);
                     if (tmpDict.Count <= 0)
                         continue;

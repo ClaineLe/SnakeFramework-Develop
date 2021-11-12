@@ -87,7 +87,11 @@ namespace com.snake.framework
                 for (int i = 0; i < assetRuleDrawList.Count; i++)
                 {
                     assetRuleDrawList[i].mAssetRule.priority = i;
+                    EditorUtility.SetDirty(assetRuleDrawList[i].mAssetRule);
                 }
+
+                AssetDatabase.SaveAssets();
+                AssetDatabase.Refresh();
             }
 
             /// <summary>
