@@ -18,10 +18,13 @@ namespace com.snake.framework
             static public void Build_AssetBundle_for_Android()
             {
                 BuildTarget buildTarget = BuildTarget.Android;
-                BuildTargetGroup buildTargetGroup = BuildTargetGroup.Android;
                 string outputPath = "AssetBundle";
-                BundleBuildParameters parameters = new BundleBuildParameters(buildTarget, buildTargetGroup, outputPath);
-                AssetBundleBuilder.BuildAssetBundle(parameters, null);
+                string extOutputPath = "ext_source";
+                string extBundleNameFilePath = @"F:\WorkSpace\github\SnakeFramework-Develop\UsingAssetList.txt";
+                SnakeBuildBundleOptions buildBundleOptions = new SnakeBuildBundleOptions(outputPath, buildTarget);
+                if (string.IsNullOrEmpty(extOutputPath) == false && string.IsNullOrEmpty(extBundleNameFilePath) == false)
+                    buildBundleOptions.SetExtBundleNamePath(extOutputPath, extBundleNameFilePath);
+                AssetBundleBuilder.BuildAssetBundle(buildBundleOptions, null);
             }
 
             [MenuItem("SnakeTools/Í¬²½Using")]

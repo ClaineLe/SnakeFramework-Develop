@@ -24,10 +24,10 @@ namespace com.snake.framework
             /// <param name="buildTarget"></param>
             /// <param name="resVersion"></param>
             /// <param name="callback"></param>
-            static public void BuildAssetBundle(BundleBuildParameters parameters, Action<AssetBundleCatalog> callback)
+            static public void BuildAssetBundle(SnakeBuildBundleOptions buildBundleOptions, Action<AssetBundleCatalog> callback)
             {
-                string outputPath = parameters.OutputFolder;
-                BuildTarget buildTarget = parameters.Target;
+                string outputPath = buildBundleOptions.mParameters.OutputFolder;
+                BuildTarget buildTarget = buildBundleOptions.mParameters.Target;
 
                 var assetBundleCatalog = new AssetBundleCatalog();
                 if (Directory.Exists(outputPath))
@@ -38,7 +38,7 @@ namespace com.snake.framework
                 var builds = generateAssetBundleList().ToArray();
                 var group = BuildPipeline.GetBuildTargetGroup(buildTarget);
                 var content = new BundleBuildContent(builds);
-                var exitCode = ContentPipeline.BuildAssetBundles(parameters, content, out var results);
+                var exitCode = ContentPipeline.BuildAssetBundles(buildBundleOptions.mParameters, content, out var results);
                 if (exitCode < ReturnCode.Success)
                 {
                     SnakeDebuger.Error("构建资源包错误. code:" + exitCode);
@@ -52,6 +52,19 @@ namespace com.snake.framework
                     File.Delete(a);
 
                 generateAssetBundleCatalog(builds, results.BundleInfos, ref assetBundleCatalog);
+
+                if (buildBundleOptions.IsProcessExtBundle())
+                {
+                    foreach (var bundleName in buildBundleOptions.mExtSourceBuneleNameList)
+                    {
+                        string formPath = Path.Combine(outputPath, bundleName);
+                        string toPath = Path.Combine(buildBundleOptions.mExtOutPutPath, bundleName);
+                        FileInfo toFileInfo = new FileInfo(toPath);
+                        if (toFileInfo.Directory.Exists == false)
+                            toFileInfo.Directory.Create();
+                        File.Move(formPath, toPath);
+                    }
+                }
                 callback?.Invoke(assetBundleCatalog);
             }
 
