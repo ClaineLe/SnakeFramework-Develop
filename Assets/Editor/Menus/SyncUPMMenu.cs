@@ -20,10 +20,9 @@ namespace com.snake.framework
                 BuildTarget buildTarget = BuildTarget.Android;
                 string outputPath = "AssetBundle";
                 string extOutputPath = "ext_source";
-                string extBundleNameFilePath = @"F:\WorkSpace\github\SnakeFramework-Develop\UsingAssetList.txt";
                 SnakeBuildBundleOptions buildBundleOptions = new SnakeBuildBundleOptions(outputPath, buildTarget);
-                if (string.IsNullOrEmpty(extOutputPath) == false && string.IsNullOrEmpty(extBundleNameFilePath) == false)
-                    buildBundleOptions.SetExtBundleNamePath(extOutputPath, extBundleNameFilePath);
+                if (string.IsNullOrEmpty(extOutputPath) == false)
+                    buildBundleOptions.SetExtBundleNamePath(extOutputPath);
                 AssetBundleBuilder.BuildAssetBundle(buildBundleOptions, null);
             }
 
