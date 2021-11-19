@@ -7,6 +7,7 @@ using UnityEditor.Build.Pipeline;
 using UnityEngine;
 using UnityEngine.Build.Pipeline;
 using com.snake.framework.runtime;
+using UnityEditor.Build.Pipeline.Interfaces;
 
 namespace com.snake.framework
 {
@@ -24,20 +25,19 @@ namespace com.snake.framework
             /// <param name="buildTarget"></param>
             /// <param name="resVersion"></param>
             /// <param name="callback"></param>
-            static public void BuildAssetBundle(SnakeBuildBundleOptions buildBundleOptions, Action<AssetBundleCatalog> callback)
+            static public void BuildAssetBundle(string assetBundleOutputPath, BuildTarget buildTarget, Action<AssetBundleCatalog> callback, string extBundleOutputPath = null)
             {
-                string outputPath = buildBundleOptions.mParameters.OutputFolder;
-                BuildTarget buildTarget = buildBundleOptions.mParameters.Target;
+                BuildTargetGroup buildTargetGroup = BuildPipeline.GetBuildTargetGroup(buildTarget);
+                BundleBuildParameters parameters = new BundleBuildParameters(buildTarget, buildTargetGroup, assetBundleOutputPath);
 
                 var assetBundleCatalog = new AssetBundleCatalog();
-                if (Directory.Exists(outputPath))
-                {
-                    Directory.Delete(outputPath, true);
-                }
-                Directory.CreateDirectory(outputPath);
+                if (Directory.Exists(assetBundleOutputPath))
+                    Directory.Delete(assetBundleOutputPath, true);
+
+                Directory.CreateDirectory(assetBundleOutputPath);
                 AssetBundleBuild[] builds = generateAssetBundleList().ToArray();
                 BundleBuildContent content = new BundleBuildContent(builds);
-                ReturnCode exitCode = ContentPipeline.BuildAssetBundles(buildBundleOptions.mParameters, content, out var results);
+                ReturnCode exitCode = ContentPipeline.BuildAssetBundles(parameters, content, out IBundleBuildResults results);
                 if (exitCode < ReturnCode.Success)
                 {
                     SnakeDebuger.Error("构建资源包错误. code:" + exitCode);
@@ -45,39 +45,113 @@ namespace com.snake.framework
                     return;
                 }
 
-                foreach (var a in Directory.GetFiles(outputPath, "*.manifest"))
+                foreach (var a in Directory.GetFiles(assetBundleOutputPath, "*.manifest"))
                     File.Delete(a);
-                foreach (var a in Directory.GetFiles(outputPath, "*.json"))
+                foreach (var a in Directory.GetFiles(assetBundleOutputPath, "*.json"))
                     File.Delete(a);
 
                 generateAssetBundleCatalog(builds, results.BundleInfos, ref assetBundleCatalog);
 
-                if (string.IsNullOrEmpty(buildBundleOptions.mExtOutPutPath) == false && buildBundleOptions.mUsingAssets.Length > 0)
+                sourcePostProcessing(assetBundleOutputPath, extBundleOutputPath, builds, results);
+
+                callback?.Invoke(assetBundleCatalog);
+            }
+
+            static private void sourcePostProcessing(string assetBundleOutputPath, string extBundleOutputPath, AssetBundleBuild[] builds, IBundleBuildResults results)
+            {
+                BuilderSetting setting = BuilderSetting.EditorGet();
+
+                string defBundleOutputPath = Path.Combine(Application.streamingAssetsPath, setting.mDefBundleOutputPath);
+                //清理默认资源目录
+                if (Directory.Exists(defBundleOutputPath))
                 {
-                    List<string> usingBundleNameList = new List<string>();
-                    int index = 0;
-                    foreach (AssetBundleBuild assetBundleBuild in builds)
+                    Directory.Delete(defBundleOutputPath, true);
+                    Directory.CreateDirectory(defBundleOutputPath);
+                }
+
+                //清理拓展资源目录
+                if (Directory.Exists(extBundleOutputPath))
+                {
+                    Directory.Delete(extBundleOutputPath, true);
+                    Directory.CreateDirectory(extBundleOutputPath);
+                }
+
+                if (string.IsNullOrEmpty(extBundleOutputPath) == true)
+                {
+                    //没有拓展资源，就把所有资源放到StreamingAssets下
+                    foreach (var iter in results.BundleInfos)
                     {
-                        foreach (string assetName in assetBundleBuild.assetNames)
-                        {
-                            index = Array.FindIndex(buildBundleOptions.mUsingAssets, array => array == assetName);
-                            if (index < 0)
-                                continue;
-                            usingBundleNameList.Add(assetBundleBuild.assetBundleName);
-                        }
-                    }
-                    usingBundleNameList = usingBundleNameList.Distinct().ToList();
-                    foreach (var bundleName in usingBundleNameList)
-                    {
-                        string formPath = Path.Combine(outputPath, bundleName);
-                        string toPath = Path.Combine(buildBundleOptions.mExtOutPutPath, bundleName);
+                        string formPath = Path.Combine(assetBundleOutputPath, iter.Key);
+                        string toPath = Path.Combine(defBundleOutputPath, iter.Key);
                         FileInfo toFileInfo = new FileInfo(toPath);
                         if (toFileInfo.Directory.Exists == false)
                             toFileInfo.Directory.Create();
                         File.Move(formPath, toPath);
                     }
                 }
-                callback?.Invoke(assetBundleCatalog);
+                else
+                {
+                    //读取默认资源录制文件
+                    List<string> defAssetList = new List<string>();
+                    if (string.IsNullOrEmpty(setting.mDefAssetRecordFile) == false)
+                    {
+                        string[] assetPaths = System.IO.File.ReadAllLines(setting.mDefAssetRecordFile);
+                        foreach (var assetPath in assetPaths)
+                        {
+                            if (string.IsNullOrEmpty(assetPath) == true)
+                                continue;
+                            defAssetList.Add(assetPath);
+                        }
+                    }
+
+                    if (defAssetList.Count == 0)
+                    {
+                        //没有录制基础资源，所有资源放拓展资源目录下
+                        foreach (var iter in results.BundleInfos)
+                        {
+                            string formPath = Path.Combine(assetBundleOutputPath, iter.Key);
+                            string toPath = Path.Combine(extBundleOutputPath, iter.Key);
+                            FileInfo toFileInfo = new FileInfo(toPath);
+                            if (toFileInfo.Directory.Exists == false)
+                                toFileInfo.Directory.Create();
+                            File.Move(formPath, toPath);
+                        }
+                    }
+                    else
+                    {
+                        //将录制的基础资源，转换为BundleName
+                        List<string> defBundleList = new List<string>();
+                        int index = 0;
+                        foreach (AssetBundleBuild assetBundleBuild in builds)
+                        {
+                            foreach (string assetName in assetBundleBuild.assetNames)
+                            {
+                                index = defAssetList.FindIndex(a => a == assetName);
+                                if (index < 0)
+                                    continue;
+                                defBundleList.Add(assetBundleBuild.assetBundleName);
+                            }
+                        }
+                        defBundleList = defBundleList.Distinct().ToList();
+
+                        ///大小包分割逻辑
+                        foreach (var iter in results.BundleInfos)
+                        {
+                            string formPath = Path.Combine(assetBundleOutputPath, iter.Key);
+
+                            //核心逻辑，判断是否为默认Bundle资源，确定复制到路径
+                            index = defBundleList.FindIndex(a => a.Equals(iter.Key));
+                            string toPath = Path.Combine(index >= 0 ? defBundleOutputPath : extBundleOutputPath, iter.Key);
+
+                            //复制
+                            FileInfo toFileInfo = new FileInfo(toPath);
+                            if (toFileInfo.Directory.Exists == false)
+                                toFileInfo.Directory.Create();
+                            File.Copy(formPath, toPath);
+                        }
+                    }
+                }
+                AssetDatabase.Refresh();
             }
 
             static private Dictionary<string, string> genAssetMap(AssetRule assetRule, SearchOption searchOpt = SearchOption.AllDirectories)
@@ -164,7 +238,7 @@ namespace com.snake.framework
                 var resultStr = "";
                 if (fullName.Contains("\\Packages\\"))
                 {
-                    var index = fullName.IndexOf("Packages\\"); 
+                    var index = fullName.IndexOf("Packages\\");
 
                     resultStr = fullName.Substring(index);
                     resultStr = resultStr.Replace("\\", "/");

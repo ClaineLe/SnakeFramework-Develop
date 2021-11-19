@@ -11,8 +11,11 @@ namespace com.snake.framework
             [Header("[Editor]资源打包规整路径")]
             public string mAssetRulesPath;
 
+            [Header("[Editor]Bundle资源在StreamingAssets下的相对路径")]
+            public string mDefBundleOutputPath;
+
             [Header("[Editor]使用中资源记录文件路径")]
-            public string mUsingAssetsFilePath;
+            public string mDefAssetRecordFile;
 
             static public BuilderSetting EditorGet()
             {
