@@ -1,5 +1,15 @@
 # Changelog
 
+## [0.2.20] - 2021-11-26
+###Added
+- 通用工具增加获取目录下文件高级接口
+
+###Modify
+- 构建AssetBundle时，传入AssetBundleBuild[]
+
+###Removed
+- 移除资源构建编辑器窗口
+
 ## [0.2.19] - 2021-11-19
 ###Added
 - 资源录制编辑器单例接口(Instance)
