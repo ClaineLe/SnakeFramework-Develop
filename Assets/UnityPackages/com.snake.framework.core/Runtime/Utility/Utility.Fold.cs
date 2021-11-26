@@ -8,6 +8,8 @@ namespace com.snake.framework
         {
             public class Fold
             {
+
+
 #if UNITY_EDITOR
                 static public void ClearFold(string foldPath, string[] ignores = null)
                 {
@@ -71,6 +73,39 @@ namespace com.snake.framework
                     }
                     return false;
                 }
+
+                /// <summary>
+                /// 获取目录下文件
+                /// </summary>
+                /// <param name="foldPath">目录路径</param>
+                /// <param name="searchOption">搜索配置</param>
+                /// <param name="filters">筛选</param>
+                /// <param name="ignores">忽略</param>
+                /// <returns></returns>
+                static public FileInfo[] GetFiles(string foldPath, SearchOption searchOption, string[] filters, string[] ignores)
+                {
+                    DirectoryInfo dirInfo = new DirectoryInfo(foldPath);
+                    System.Collections.Generic.List<FileInfo> fileInfoList = new System.Collections.Generic.List<FileInfo>(dirInfo.GetFiles("*", searchOption));
+
+                    if (filters != null && filters.Length > 0)
+                    {
+                        foreach (string filter in filters)
+                        {
+                            fileInfoList.RemoveAll(a => a.FullName.Contains(filter) == false);
+                        }
+                    }
+
+                    if (ignores != null && ignores.Length > 0)
+                    {
+                        foreach (string ignore in ignores)
+                        {
+                            fileInfoList.RemoveAll(a => a.FullName.Contains(ignore) == true);
+                        }
+                    }
+                    return fileInfoList.ToArray();
+                }
+
+
             }
         }
     }
