@@ -25,7 +25,7 @@ namespace com.snake.framework
             /// <param name="buildTarget"></param>
             /// <param name="resVersion"></param>
             /// <param name="callback"></param>
-            static public void BuildAssetBundle(string assetBundleOutputPath, BuildTarget buildTarget, Action<AssetBundleCatalog> callback, string extBundleOutputPath = null)
+            static public void BuildAssetBundle(string assetBundleOutputPath, BuildTarget buildTarget, AssetBundleBuild[] assetBundleBuilds, Action<AssetBundleCatalog> callback, string extBundleOutputPath = null)
             {
                 BuildTargetGroup buildTargetGroup = BuildPipeline.GetBuildTargetGroup(buildTarget);
                 BundleBuildParameters parameters = new BundleBuildParameters(buildTarget, buildTargetGroup, assetBundleOutputPath);
@@ -35,8 +35,7 @@ namespace com.snake.framework
                     Directory.Delete(assetBundleOutputPath, true);
 
                 Directory.CreateDirectory(assetBundleOutputPath);
-                AssetBundleBuild[] builds = generateAssetBundleList().ToArray();
-                BundleBuildContent content = new BundleBuildContent(builds);
+                BundleBuildContent content = new BundleBuildContent(assetBundleBuilds);
                 ReturnCode exitCode = ContentPipeline.BuildAssetBundles(parameters, content, out IBundleBuildResults results);
                 if (exitCode < ReturnCode.Success)
                 {
@@ -50,9 +49,9 @@ namespace com.snake.framework
                 foreach (var a in Directory.GetFiles(assetBundleOutputPath, "*.json"))
                     File.Delete(a);
 
-                generateAssetBundleCatalog(builds, results.BundleInfos, ref assetBundleCatalog);
+                generateAssetBundleCatalog(assetBundleBuilds, results.BundleInfos, ref assetBundleCatalog);
 
-                sourcePostProcessing(assetBundleOutputPath, extBundleOutputPath, builds, results);
+                sourcePostProcessing(assetBundleOutputPath, extBundleOutputPath, assetBundleBuilds, results);
 
                 callback?.Invoke(assetBundleCatalog);
             }
@@ -61,7 +60,7 @@ namespace com.snake.framework
             {
                 BuilderSetting setting = BuilderSetting.EditorGet();
 
-                string defBundleOutputPath = Path.Combine(Application.streamingAssetsPath, setting.mDefBundleOutputPath);
+                string defBundleOutputPath = Path.Combine(Application.streamingAssetsPath, setting.mBundleCachePath);
                 //清理默认资源目录
                 if (Directory.Exists(defBundleOutputPath))
                 {
@@ -154,173 +153,6 @@ namespace com.snake.framework
                 AssetDatabase.Refresh();
             }
 
-            static private Dictionary<string, string> genAssetMap(AssetRule assetRule, SearchOption searchOpt = SearchOption.AllDirectories)
-            {
-                Dictionary<string, string> assetMap = new Dictionary<string, string>();
-
-                DirectoryInfo dirInfo = new DirectoryInfo(assetRule.foldPath);
-                List<FileSystemInfo> fileInfoList = new List<FileSystemInfo>();
-
-                if (assetRule.packerMode == PACKER_MODE.childfold)
-                {
-                    if (assetRule.types == null || assetRule.types.Length == 0)
-                    {
-                        fileInfoList.AddRange(dirInfo.GetDirectories("*", SearchOption.AllDirectories));
-                    }
-                    else
-                    {
-                        for (int i = 0; i < assetRule.types.Length; i++)
-                            fileInfoList.AddRange(dirInfo.GetDirectories(assetRule.types[i], SearchOption.AllDirectories));
-                    }
-
-                    foreach (var a in fileInfoList)
-                    {
-                        AssetRule childAssetRule = ScriptableObject.CreateInstance<AssetRule>();
-                        childAssetRule.foldPath = a.FullName;
-                        childAssetRule.packerMode = PACKER_MODE.together;
-                        childAssetRule.types = assetRule.types;
-                        childAssetRule.filters = assetRule.filters;
-                        Dictionary<string, string> tmpDict = genAssetMap(childAssetRule, SearchOption.TopDirectoryOnly);
-                        foreach (var b in tmpDict)
-                        {
-                            assetMap.Add(b.Key, b.Value);
-                        }
-                    }
-
-                    return assetMap;
-                }
-                else
-                {
-                    if (assetRule.types == null || assetRule.types.Length == 0)
-                    {
-                        fileInfoList.AddRange(dirInfo.GetFiles("*.*", searchOpt));
-                    }
-                    else
-                    {
-                        for (int i = 0; i < assetRule.types.Length; i++)
-                            fileInfoList.AddRange(dirInfo.GetFiles(assetRule.types[i], searchOpt));
-                    }
-                }
-
-                //过滤
-                foreach (string filterStr in assetRule.filters)
-                    fileInfoList.RemoveAll(a => a.FullName.Contains(filterStr));
-
-                string bundleName = GetFixPathString(dirInfo.FullName).Replace("/", "_").Replace(".", "_").ToLower();
-                for (var i = 0; i < fileInfoList.Count; i++)
-                {
-                    FileSystemInfo item = fileInfoList[i];
-                    string fileFullPath = item.FullName;
-                    if (fileFullPath.Contains("\\Packages\\"))
-                    {
-                        var index = fileFullPath.IndexOf("Packages\\");
-                        fileFullPath = fileFullPath.Substring(index);
-                        fileFullPath = fileFullPath.Replace("\\", "/");
-                    }
-                    else
-                    {
-                        fileFullPath = fileFullPath.Replace("\\", "/").Replace(Application.dataPath, "Assets");
-                    }
-
-                    if (assetRule.packerMode == PACKER_MODE.single)
-                    {
-                        bundleName = GetFixPathString(item.FullName);
-                        bundleName = Path.Combine(Path.GetDirectoryName(bundleName), Path.GetFileNameWithoutExtension(bundleName)).Replace("\\", "/");
-                        bundleName = bundleName.Replace("/", "_").Replace(".", "_").ToLower();
-                    }
-                    assetMap.Add(fileFullPath, bundleName);
-                }
-                return assetMap;
-            }
-
-            static private string GetFixPathString(string fullName)
-            {
-                var resultStr = "";
-                if (fullName.Contains("\\Packages\\"))
-                {
-                    var index = fullName.IndexOf("Packages\\");
-
-                    resultStr = fullName.Substring(index);
-                    resultStr = resultStr.Replace("\\", "/");
-                }
-                else
-                {
-                    resultStr = fullName.Replace("\\", "/").Replace(Application.dataPath + "/ResExport/", string.Empty);
-                }
-
-                return resultStr;
-            }
-
-            static private Dictionary<string, string> generateAssetMap()
-            {
-                var assetMapDict = new Dictionary<string, string>();
-                BuilderSetting builderSetting = BuilderSetting.EditorGet();
-                if (string.IsNullOrEmpty(builderSetting.mAssetRulesPath))
-                {
-                    SnakeDebuger.Error("未在EnvironmentSetting.asset中配置，资源规则路径.");
-                    return null;
-                }
-                string[] files = Directory.GetFiles(builderSetting.mAssetRulesPath, "*.asset");
-                List<AssetRule> ruleList = new List<AssetRule>();
-
-                string tmpPath = string.Empty;
-                for (int i = 0; i < files.Length; i++)
-                {
-                    tmpPath = files[i].Replace("\\", "/");
-                    AssetRule assetRule = AssetDatabase.LoadAssetAtPath<AssetRule>(tmpPath);
-                    if (assetRule == null)
-                    {
-                        SnakeDebuger.Error("没有找到AssetRule.Path:" + tmpPath);
-                        continue;
-                    }
-
-                    ruleList.Add(assetRule);
-                }
-
-                ruleList.Sort((a, b) => a.priority.CompareTo(b.priority));
-                Dictionary<string, string> tmpDict = new Dictionary<string, string>();
-                for (int i = 0; i < ruleList.Count; i++)
-                {
-                    var assetRule = ruleList[i];
-                    tmpDict = genAssetMap(assetRule);
-                    if (tmpDict.Count <= 0)
-                        continue;
-
-                    Dictionary<string, string>.Enumerator enumerator = tmpDict.GetEnumerator();
-                    while (enumerator.MoveNext())
-                    {
-                        if (assetMapDict.TryGetValue(enumerator.Current.Key, out string bundleName) == true)
-                            continue;
-                        assetMapDict.Add(enumerator.Current.Key, enumerator.Current.Value);
-                    }
-                }
-                return assetMapDict;
-            }
-            static private List<AssetBundleBuild> generateAssetBundleList()
-            {
-                Dictionary<string, string> mapping = generateAssetMap();
-                Dictionary<string, List<string>> assetBundleInfoDic = new Dictionary<string, List<string>>();
-                foreach (var a in mapping)
-                {
-                    if (assetBundleInfoDic.TryGetValue(a.Value, out var assetList) == false)
-                    {
-                        assetList = new List<string>();
-                        assetBundleInfoDic.Add(a.Value, assetList);
-                    }
-                    assetList.Add(a.Key);
-                }
-
-                List<AssetBundleBuild> assetBundleBuildList = new List<AssetBundleBuild>();
-                foreach (var a in assetBundleInfoDic)
-                {
-                    assetBundleBuildList.Add(new AssetBundleBuild()
-                    {
-                        assetBundleName = a.Key,
-                        assetNames = a.Value.ToArray()
-                    });
-                }
-                return assetBundleBuildList;
-            }
             static private void generateAssetBundleCatalog(AssetBundleBuild[] builds, Dictionary<string, BundleDetails> bundleInfos, ref AssetBundleCatalog assetBundleCatalog)
             {
                 foreach (AssetBundleBuild a in builds)
@@ -347,6 +179,7 @@ namespace com.snake.framework
                     }
                 }
             }
+
             static private void getDependends(string main, Dictionary<string, BundleDetails> bundleInfos, ref List<string> list)
             {
                 var result = bundleInfos.TryGetValue(main, out var details);
