@@ -43,13 +43,13 @@ namespace com.snake.framework
                 _SyncSnakeFramework_ImpNetWork(true);
             }
 
-            [MenuItem("SnakeTools/Debug-UPM/com.snake.framework.core")]
+            [MenuItem("SnakeTools/Release-UPM/com.snake.framework.core")]
             static public void SyncSnakeFramework_Core_Release()
             {
                 _SyncSnakeFramework_Core(false);
             }
 
-            [MenuItem("SnakeTools/Debug-UPM/com.snake.framework.imp-network")]
+            [MenuItem("SnakeTools/Release-UPM/com.snake.framework.imp-network")]
             static public void SyncSnakeFramework_ImpNetWork_Release()
             {
                 _SyncSnakeFramework_ImpNetWork(false);
