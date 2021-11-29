@@ -28,13 +28,16 @@ namespace com.snake.framework
             static public void BuildAssetBundle(string assetBundleOutputPath, BuildTarget buildTarget, AssetBundleBuild[] assetBundleBuilds, Action<AssetBundleCatalog> callback, string extBundleOutputPath = null)
             {
                 BuildTargetGroup buildTargetGroup = BuildPipeline.GetBuildTargetGroup(buildTarget);
-                BundleBuildParameters parameters = new BundleBuildParameters(buildTarget, buildTargetGroup, assetBundleOutputPath);
+
+                BuilderSetting setting = BuilderSetting.EditorGet();
+
+                BundleBuildParameters parameters = new BundleBuildParameters(buildTarget, buildTargetGroup, setting.mBundleCachePath);
 
                 var assetBundleCatalog = new AssetBundleCatalog();
-                if (Directory.Exists(assetBundleOutputPath))
-                    Directory.Delete(assetBundleOutputPath, true);
+                if (Directory.Exists(setting.mBundleCachePath))
+                    Directory.Delete(setting.mBundleCachePath, true);
 
-                Directory.CreateDirectory(assetBundleOutputPath);
+                Directory.CreateDirectory(setting.mBundleCachePath);
                 BundleBuildContent content = new BundleBuildContent(assetBundleBuilds);
                 ReturnCode exitCode = ContentPipeline.BuildAssetBundles(parameters, content, out IBundleBuildResults results);
                 if (exitCode < ReturnCode.Success)
@@ -44,22 +47,20 @@ namespace com.snake.framework
                     return;
                 }
 
-                foreach (var a in Directory.GetFiles(assetBundleOutputPath, "*.manifest"))
+                foreach (var a in Directory.GetFiles(setting.mBundleCachePath, "*.manifest"))
                     File.Delete(a);
-                foreach (var a in Directory.GetFiles(assetBundleOutputPath, "*.json"))
+                foreach (var a in Directory.GetFiles(setting.mBundleCachePath, "*.json"))
                     File.Delete(a);
 
                 generateAssetBundleCatalog(assetBundleBuilds, results.BundleInfos, ref assetBundleCatalog);
 
-                sourcePostProcessing(assetBundleOutputPath, extBundleOutputPath, assetBundleBuilds, results);
+                sourcePostProcessing(setting, extBundleOutputPath, assetBundleBuilds, results);
 
                 callback?.Invoke(assetBundleCatalog);
             }
 
-            static private void sourcePostProcessing(string assetBundleOutputPath, string extBundleOutputPath, AssetBundleBuild[] builds, IBundleBuildResults results)
+            static private void sourcePostProcessing(BuilderSetting setting, string extBundleOutputPath, AssetBundleBuild[] builds, IBundleBuildResults results)
             {
-                BuilderSetting setting = BuilderSetting.EditorGet();
-
                 string defBundleOutputPath = Path.Combine(Application.streamingAssetsPath, setting.mBundleCachePath);
                 //清理默认资源目录
                 if (Directory.Exists(defBundleOutputPath))
@@ -80,7 +81,7 @@ namespace com.snake.framework
                     //没有拓展资源，就把所有资源放到StreamingAssets下
                     foreach (var iter in results.BundleInfos)
                     {
-                        string formPath = Path.Combine(assetBundleOutputPath, iter.Key);
+                        string formPath = Path.Combine(setting.mBundleCachePath, iter.Key);
                         string toPath = Path.Combine(defBundleOutputPath, iter.Key);
                         FileInfo toFileInfo = new FileInfo(toPath);
                         if (toFileInfo.Directory.Exists == false)
@@ -108,7 +109,7 @@ namespace com.snake.framework
                         //没有录制基础资源，所有资源放拓展资源目录下
                         foreach (var iter in results.BundleInfos)
                         {
-                            string formPath = Path.Combine(assetBundleOutputPath, iter.Key);
+                            string formPath = Path.Combine(setting.mBundleCachePath, iter.Key);
                             string toPath = Path.Combine(extBundleOutputPath, iter.Key);
                             FileInfo toFileInfo = new FileInfo(toPath);
                             if (toFileInfo.Directory.Exists == false)
@@ -136,7 +137,7 @@ namespace com.snake.framework
                         ///大小包分割逻辑
                         foreach (var iter in results.BundleInfos)
                         {
-                            string formPath = Path.Combine(assetBundleOutputPath, iter.Key);
+                            string formPath = Path.Combine(setting.mBundleCachePath, iter.Key);
 
                             //核心逻辑，判断是否为默认Bundle资源，确定复制到路径
                             index = defBundleList.FindIndex(a => a.Equals(iter.Key));
