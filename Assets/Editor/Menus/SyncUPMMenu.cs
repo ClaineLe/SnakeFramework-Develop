@@ -1,3 +1,4 @@
+using System.Text;
 using com.snake.framework.editor;
 using com.snake.framework.runtime;
 using Newtonsoft.Json;
@@ -103,7 +104,8 @@ namespace com.snake.framework
                 System.Version newVersion = new System.Version(major, minor, build);
                 upmObject[key] = newVersion.ToString();
                 json = JsonConvert.SerializeObject(upmObject, Formatting.Indented);
-                System.IO.File.WriteAllText(jsonPath, json, System.Text.Encoding.Default);
+                UTF8Encoding end = new UTF8Encoding(false);
+                System.IO.File.WriteAllText(jsonPath, json, end);
             }
 
             static private void _CopyToGitRepo(string unityPackageName, string repositoriePath, string[] repoIgnores, string[] copyIgnores, bool debug)
