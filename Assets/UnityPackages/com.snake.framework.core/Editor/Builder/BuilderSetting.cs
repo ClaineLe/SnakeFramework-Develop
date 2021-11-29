@@ -8,13 +8,13 @@ namespace com.snake.framework
         [UnityEngine.CreateAssetMenu(fileName = "BuilderSetting")]
         public class BuilderSetting : SnakeBasicSetting<BuilderSetting>
         {
-            [Header("[Editor]资源打包规整路径")]
+            [Header("[Editor]璧勬簮瑙勫垯鐩綍")]
             public string mAssetRulesPath;
 
-            [Header("[Editor]Bundle资源在StreamingAssets下的相对路径")]
-            public string mDefBundleOutputPath;
+            [Header("[Editor]Bundle缂撳瓨鐩綍")]
+            public string mBundleCachePath;
 
-            [Header("[Editor]使用中资源记录文件路径")]
+            [Header("[Editor]琚敤璧勬簮褰曞儚鏂囦欢")]
             public string mDefAssetRecordFile;
 
             static public BuilderSetting EditorGet()
