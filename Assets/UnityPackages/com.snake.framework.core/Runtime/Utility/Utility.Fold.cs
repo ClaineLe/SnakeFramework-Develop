@@ -68,7 +68,7 @@ namespace com.snake.framework
 
                     for (int i = 0; i < ignores.Length; i++)
                     {
-                        if (path.Contains(ignores[i]) == true)
+                        if (path.Contains(ignores[i].FixSlash()) == true)
                             return true;
                     }
                     return false;
@@ -99,7 +99,7 @@ namespace com.snake.framework
                     {
                         foreach (string ignore in ignores)
                         {
-                            fileInfoList.RemoveAll(a => a.FullName.Contains(ignore) == true);
+                            fileInfoList.RemoveAll(a => a.FullName.Contains(ignore.FixSlash()) == true);
                         }
                     }
                     return fileInfoList.ToArray();
