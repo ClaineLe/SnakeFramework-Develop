@@ -1,9 +1,11 @@
-using UnityEditor;
+using System.Text;
+using com.snake.framework.editor;
+using com.snake.framework.runtime;
 using Newtonsoft.Json;
-using System.Data;
-using UnityEngine;
-using UnityEditorInternal;
 using Newtonsoft.Json.Linq;
+using UnityEditor;
+using UnityEditor.Build.Pipeline;
+using UnityEngine;
 
 namespace com.snake.framework
 {
@@ -13,130 +15,118 @@ namespace com.snake.framework
         {
             private const string UPM_PATH_ROOT = "Assets/UnityPackages";
 
-            [MenuItem("SnakeTools/同步UPM/com.snake.framework.core")]
-            static public void SyncSnakeFramework_Core()
+            [MenuItem("SnakeTools/BuildAssetBundle(Android)")]
+            static public void Build_AssetBundle_for_Android()
+            {
+                BuildTarget buildTarget = BuildTarget.Android;
+                string outputPath = "AssetBundle";
+                string extOutputPath = "ext_source";
+                //AssetBundleBuilder.BuildAssetBundle(outputPath, buildTarget, null, extOutputPath);
+            }
+
+            [MenuItem("SnakeTools/Debug-Using")]
+            static public void SyncSnakeFramework_Using()
+            {
+                string repositoriePath = "../SnakeFramework-Using/Assets/";
+                Utility.Fold.ClearFold(repositoriePath, null);
+                Utility.Fold.CopyFold("Assets", repositoriePath, new[] { "UnityPackages" });
+            }
+
+            [MenuItem("SnakeTools/Debug-UPM/com.snake.framework.core")]
+            static public void SyncSnakeFramework_Core_Debug()
+            {
+                _SyncSnakeFramework_Core(true);
+            }
+
+            [MenuItem("SnakeTools/Debug-UPM/com.snake.framework.imp-network")]
+            static public void SyncSnakeFramework_ImpNetWork_Debug()
+            {
+                _SyncSnakeFramework_ImpNetWork(true);
+            }
+
+            [MenuItem("SnakeTools/Release-UPM/com.snake.framework.core")]
+            static public void SyncSnakeFramework_Core_Release()
+            {
+                _SyncSnakeFramework_Core(false);
+            }
+
+            [MenuItem("SnakeTools/Release-UPM/com.snake.framework.imp-network")]
+            static public void SyncSnakeFramework_ImpNetWork_Release()
+            {
+                _SyncSnakeFramework_ImpNetWork(false);
+            }
+
+            [MenuItem("SnakeTools/Sync-UPM/com.snake.framework.fork-fairygui")]
+            static public void SyncSnakeFramework_ForkFairyGUI_Release()
+            {
+                string unityPackageName = "com.snake.framework.fork-fairygui";
+                string repositoriePath = "../SnakeFramework_ForkFairyGUI/";
+                _CopyToGitRepo(unityPackageName, repositoriePath, new[] { "\\.git", }, null, true);
+
+            }
+
+            static private void _SyncSnakeFramework_Core(bool debug)
             {
                 string unityPackageName = "com.snake.framework.core";
                 string repositoriePath = "../SnakeFramework-Core/";
-                string fullPath = UPM_PATH_ROOT + "/" + unityPackageName;
-                _TickVersion(fullPath, 0, 0, 0, 1);
-                System.IO.DirectoryInfo foldInfo = new System.IO.DirectoryInfo(repositoriePath);
-                if (foldInfo.Exists == false)
-                {
-                    Debug.LogError("目录不存在：" + foldInfo.FullName);
-                    return;
-                }
-
-                foreach (var a in foldInfo.GetFileSystemInfos("*", System.IO.SearchOption.AllDirectories))
-                {
-                    if (a.FullName.Contains("\\.git"))
-                        continue;
-                    if (a.Exists == false)
-                        continue;
-                    FileUtil.DeleteFileOrDirectory(a.FullName.FixSlash());
-                }
-
-                FileUtil.CopyFileOrDirectory(fullPath + "/Common", repositoriePath + "/Common");
-                FileUtil.CopyFileOrDirectory(fullPath + "/Editor", repositoriePath + "/Editor");
-                FileUtil.CopyFileOrDirectory(fullPath + "/Runtime", repositoriePath + "/Runtime");
-                foreach (var a in System.IO.Directory.GetFiles(fullPath, "*", System.IO.SearchOption.TopDirectoryOnly))
-                {
-                    string fileName = System.IO.Path.GetFileName(a);
-                    FileUtil.CopyFileOrDirectory(fullPath + "/" + fileName, repositoriePath + "/" + fileName);
-                }
-
+                _CopyToGitRepo(unityPackageName, repositoriePath, new[] { "\\.git", }, null, debug);
             }
 
-            [MenuItem("SnakeTools/同步UPM/com.snake.framework.imp-network")]
-            static public void SyncSnakeFramework_ImpNetWork()
+            static private void _SyncSnakeFramework_ImpNetWork(bool debug)
             {
                 string unityPackageName = "com.snake.framework.imp-network";
                 string repositoriePath = "../SnakeFramework-ImpNetWork/";
-                string fullPath = UPM_PATH_ROOT + "/" + unityPackageName;
-                _TickVersion(fullPath, 0, 0, 0, 1);
-                System.IO.DirectoryInfo foldInfo = new System.IO.DirectoryInfo(repositoriePath);
-                if (foldInfo.Exists == false)
-                {
-                    Debug.LogError("目录不存在：" + foldInfo.FullName);
-                    return;
-                }
-
-                foreach (var a in foldInfo.GetFileSystemInfos("*", System.IO.SearchOption.AllDirectories))
-                {
-                    if (a.FullName.Contains("\\.git"))
-                        continue;
-                    if (a.Exists == false)
-                        continue;
-                    FileUtil.DeleteFileOrDirectory(a.FullName.FixSlash());
-                }
-
-                FileUtil.CopyFileOrDirectory(fullPath + "/Runtime", repositoriePath + "/Runtime");
-                FileUtil.CopyFileOrDirectory(fullPath + "/Sample", repositoriePath + "/Sample");
-                foreach (var a in System.IO.Directory.GetFiles(fullPath, "*", System.IO.SearchOption.TopDirectoryOnly))
-                {
-                    string fileName = System.IO.Path.GetFileName(a);
-                    FileUtil.CopyFileOrDirectory(fullPath + "/" + fileName, repositoriePath + "/" + fileName);
-                }
-
+                _CopyToGitRepo(unityPackageName, repositoriePath, new[] { "\\.git", }, null, debug);
             }
 
-            [MenuItem("SnakeTools/同步UPM/com.snake.framework.imp-xlua")]
-            static public void SyncSnakeFramework_ImpXLua()
+            static public void _SyncSnakeFramework_ImpXLua(bool debug)
             {
                 string unityPackageName = "com.snake.framework.imp-xlua";
                 string repositoriePath = "../SnakeFramework-ImpXLua/";
-                string fullPath = UPM_PATH_ROOT + "/" + unityPackageName;
-                _TickVersion(fullPath, 0, 0, 0, 1);
-                System.IO.DirectoryInfo foldInfo = new System.IO.DirectoryInfo(repositoriePath);
-                if (foldInfo.Exists == false)
-                {
-                    Debug.LogError("目录不存在：" + foldInfo.FullName);
-                    return;
-                }
-
-                System.IO.Directory.Delete(repositoriePath + "/Runtime", true);
-                System.IO.Directory.Delete(repositoriePath + "/Sample", true);
-                foreach (var a in foldInfo.GetFiles("*", System.IO.SearchOption.TopDirectoryOnly))
-                    a.Delete();
-
-                FileUtil.CopyFileOrDirectory(fullPath + "/Runtime", repositoriePath + "/Runtime");
-                FileUtil.CopyFileOrDirectory(fullPath + "/Sample", repositoriePath + "/Sample");
-                foreach (var a in System.IO.Directory.GetFiles(fullPath, "*", System.IO.SearchOption.TopDirectoryOnly))
-                {
-                    string fileName = System.IO.Path.GetFileName(a);
-                    FileUtil.CopyFileOrDirectory(fullPath + "/" + fileName, repositoriePath + "/" + fileName);
-                }
+                _CopyToGitRepo(unityPackageName, repositoriePath, new[] { "\\.git", "\\Plugins", "\\XLua" }, new[] { "\\Plugins", "\\XLua" }, debug);
             }
 
-            static private System.Version _TickVersion(string upPath, int major, int minor, int build, int revision, bool autoSave = true)
+            static private System.Version _GetVersion(string upPath)
             {
                 string key = "version";
                 string jsonPath = upPath + "/package.json";
-                JObject upmObject = _ReadPackageJson(jsonPath);
-                System.Version oldVersion = System.Version.Parse(upmObject.GetValue(key).Value<string>());
-                System.Version newVersion = new System.Version(
-                    oldVersion.Major + major,
-                    oldVersion.Minor + minor,
-                    oldVersion.Build + build,
-                    oldVersion.Revision + revision);
-                upmObject[key] = newVersion.ToString();
-                if (autoSave)
-                    _WritePackageJson(jsonPath, upmObject);
-                return newVersion;
-            }
-
-
-            static private JObject _ReadPackageJson(string jsonPath)
-            {
                 string json = System.IO.File.ReadAllText(jsonPath);
-                return JsonConvert.DeserializeObject<JObject>(json);
-            }
-            static private void _WritePackageJson(string jsonPath, JObject upmObject)
-            {
-                string json = JsonConvert.SerializeObject(upmObject, Formatting.Indented);
-                System.IO.File.WriteAllText(jsonPath, json, System.Text.Encoding.UTF8);
+                JObject upmObject = JsonConvert.DeserializeObject<JObject>(json);
+                return System.Version.Parse(upmObject.GetValue(key).Value<string>());
             }
 
+            static private void _SetVersion(string upPath, int major, int minor, int build)
+            {
+                string key = "version";
+                string jsonPath = upPath + "/package.json";
+                string json = System.IO.File.ReadAllText(jsonPath);
+                JObject upmObject = JsonConvert.DeserializeObject<JObject>(json);
+                System.Version newVersion = new System.Version(major, minor, build);
+                upmObject[key] = newVersion.ToString();
+                json = JsonConvert.SerializeObject(upmObject, Formatting.Indented);
+                UTF8Encoding end = new UTF8Encoding(false);
+                System.IO.File.WriteAllText(jsonPath, json, end);
+            }
+
+            static private void _CopyToGitRepo(string unityPackageName, string repositoriePath, string[] repoIgnores, string[] copyIgnores, bool debug)
+            {
+                string fullPath = UPM_PATH_ROOT + "/" + unityPackageName;
+                System.Version version = _GetVersion(fullPath);
+                if (debug)
+                    _SetVersion(fullPath, version.Major, version.Minor, version.Build + 1);
+                else
+                    _SetVersion(fullPath, version.Major, version.Minor + 1, 0);
+                System.IO.DirectoryInfo foldInfo = new System.IO.DirectoryInfo(repositoriePath);
+                if (foldInfo.Exists == false)
+                {
+                    SnakeDebuger.Error("fold is not exists" + foldInfo.FullName);
+                    return;
+                }
+                Utility.Fold.ClearFold(repositoriePath, repoIgnores);
+                Utility.Fold.CopyFold(fullPath, repositoriePath, copyIgnores);
+
+                SnakeDebuger.Log((debug ? "debug" : "release") + unityPackageName);
+            }
         }
     }
 }
